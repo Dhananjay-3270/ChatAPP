@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
-
+import { AuthService } from "../services/AuthService";
+import { StatusCode } from "../../core/utils/enum";
 export const Login: React.FC = () => {
   const navigate = useNavigate();
 
@@ -15,20 +16,16 @@ export const Login: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-      credentials: "include",
-    }).then((res) => {
-      if (res.status === 200) {
+    try {
+      const response = await AuthService.login(formData);
+      if (response.status === StatusCode.OK) {
         navigate("/home");
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {StatusCode} from "../core/utils/enum"
+import { StatusCode } from "../core/utils/enum"
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 const DEFAULT_TIMEOUT = 60 * 1000 * 3;
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
-const domain = import.meta.env.VITE_DOMAIN;
+const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;
+const domain = import.meta.env.VITE_APP_DOMAIN;
 const apiClient = axios.create({
     baseURL: baseUrl,
     timeout: DEFAULT_TIMEOUT,
@@ -50,6 +50,6 @@ export class NetworkManager {
     apiClient = apiClient;
 
     appRequest = async (options: AxiosRequestConfig) => {
-        return apiClient(options) as Promise<AxiosResponse | any>;
+        return apiClient(options) as Promise<AxiosResponse<unknown>>;
     };
 }

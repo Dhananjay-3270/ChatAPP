@@ -8,14 +8,29 @@ import {
   LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { AuthService } from "../services/AuthService";
+import { StatusCode } from "../../core/utils/enum";
 interface Hamburgerprops {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
+  const navigate = useNavigate();
   const [profiletoggle, setProfileToggle] = useState(false);
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await AuthService.logout();
+      if (response.status === StatusCode.OK) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex flex-row justify-between relative p-2">
       {/* Overlay for dim effect */}
@@ -63,13 +78,12 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
         )}
       </div>
       <div className="profile-section relative flex items-center">
-         
-          <UserPen
-            className="cursor-pointer text-gray-700"
-            onClick={() => setProfileToggle(!profiletoggle)}
-            size={28}
-          />
-       
+        <UserPen
+          className="cursor-pointer text-gray-700"
+          onClick={() => setProfileToggle(!profiletoggle)}
+          size={28}
+        />
+
         {profiletoggle && (
           <div className="absolute top-10 right-0 w-44 bg-white rounded-lg shadow-xl z-40 p-3 flex flex-col gap-2">
             <button
@@ -81,7 +95,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
             </button>
             <button
               className="flex items-center gap-2 px-3 py-2 rounded hover:bg-red-100 text-red-600 transition"
-              onClick={() => setProfileToggle(false)}
+              onClick={handleLogout}
             >
               <LogOut className="text-red-500" size={20} />
               Logout

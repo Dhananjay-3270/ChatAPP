@@ -13,7 +13,7 @@ const corsOptions = {
 };
 server.use(express.json());
 server.use(cors(corsOptions));
-server.use("/login", userRoutes);
+server.use("/user", userRoutes);
 
 server.listen(port, () => {
   console.log(`server listening on port ${port}`);

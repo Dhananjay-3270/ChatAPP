@@ -2,24 +2,23 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
-const bodyParser = require("body-parser");
-const verifyAuth = require("../middleware/verifyAuth");
-const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 
 const secretkey = process.env.JWT_SECRET;
 
 // This route listens to GET /users
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       res.status(400).json({ message: "Invalid email or password" });
+      return;
     }
     const isMatch = password === existingUser.password;
     if (!isMatch) {
       res.status(400).json({ message: "Invalid Password" });
+      return;
     }
 
     const token = jwt.sign({ email, password }, secretkey);
@@ -60,6 +59,17 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+router.post("/logout", async (req, res) => {
+  try {
+    res.clearCookie("authcookie", {
+      httpOnly: true,
+    });
+    return res.status(200).json({ message: "Logout Successfull" });
+  } catch (err) {
+    console.log(err);
+   return res.status(500).json({ error: "Server error" });
   }
 });
 module.exports = router;
