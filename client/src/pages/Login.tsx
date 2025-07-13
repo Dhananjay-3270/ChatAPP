@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { ThemeToggle } from "../components/ThemeToggle";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -32,12 +32,10 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen dark-mode-bg relative">
-      
-
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative">
       {/* Theme Toggle Button */}
       <div className="absolute top-4 right-4 z-10">
-       
+        <ThemeToggle />
       </div>
 
       <div className="min-h-screen flex">
@@ -45,7 +43,7 @@ export const Login: React.FC = () => {
         <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full">
             <form
-              className="dark-mode-card p-8 rounded-2xl shadow-xl flex flex-col gap-5"
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl flex flex-col gap-5"
               onSubmit={handleSubmit}
             >
               <h2 className="text-3xl font-bold mb-2 text-center text-blue-700 dark:text-blue-400">

@@ -9,28 +9,27 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 
 const App: React.FC = () => {
+
   const isAuth = false;
   return (
-    
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/"
-          element={
-            isAuth ? (
-              <Navigate to="/login" replace />
-            ) : (
-              <Layout>
-                <Outlet />
-              </Layout>
-            )
-          }
-        >
-          <Route path="/home" element={<Home />} />
-        </Route>
-      </Routes>
-
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="/"
+        element={
+          isAuth ? (
+            <Navigate to="/login" replace />
+          ) : (
+            <Layout>
+              <Outlet />
+            </Layout>
+          )
+        }
+      >
+        <Route path="/home" element={<Home />} />
+      </Route>
+    </Routes>
   );
 };
 
