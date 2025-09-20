@@ -12,7 +12,7 @@ import { useUser } from "./Context/UserContext";
 
 const AppContent: React.FC = () => {
   const { isAuth } = useUser();
-  console.log(isAuth)
+
   return (
     <Routes>
       <Route

@@ -1,4 +1,4 @@
-import { UserPen, Settings, LogOut ,MessageCircle} from "lucide-react";
+import { UserPen, Settings, LogOut, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
@@ -23,7 +23,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
     }
   };
   return (
-    <div className="flex flex-row justify-between relative p-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div className="flex flex-row justify-between relative p-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-20">
       {/* Overlay for dim effect */}
       {open && (
         <div
@@ -33,9 +33,12 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
       )}
 
       <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
-       <MessageCircle/>
+        <MessageCircle />
       </div>
-      <div className="profile-section relative flex items-center">
+      <div className="profile-section relative flex items-center gap-2.5 mr-2">
+        <div className="flex items-center">
+          <h2>Dhananjay Shinde</h2>
+        </div>
         <UserPen
           className="cursor-pointer text-gray-700 dark:text-gray-300 pr-1 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           onClick={() => setProfileToggle(!profiletoggle)}

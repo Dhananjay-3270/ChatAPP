@@ -19,15 +19,9 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   // Temporarily set to true for testing - change back to null for production
-  const [user, setuser] = useState<User | null>({
-    fullName: "Test User",
-    userName: "testuser",
-    email: "test@example.com",
-    age: "25",
-  });
+  const [user, setuser] = useState<User | null>(null);
 
   const login = (user: User) => {
-
     setuser(user);
   };
   const logout = () => {
