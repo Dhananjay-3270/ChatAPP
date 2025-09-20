@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
+import { AuthService } from "../services/AuthService";
+import { StatusCode } from "../../core/utils/enum";
 interface User {
   fullName: string;
   userName: string;
@@ -29,19 +31,16 @@ export const Register: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    fetch("http://localhost:3000/login/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).then((res) => {
-      if (res.status === 201) {
+    try {
+      const response = await AuthService.register(formData);
+      if (response.status === StatusCode.OK) {
         navigate("/login");
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +52,7 @@ export const Register: React.FC = () => {
         className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-96 flex flex-col gap-4"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-3xl font-bold mb-2 text-center text-blue-700 dark:text-blue-400">
+        <h2 className="text-3xl font-bold mb-2 text-center text-black dark:text-blue-400">
           Register
         </h2>
         <input
@@ -113,7 +112,7 @@ export const Register: React.FC = () => {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
+          className="bg-black text-white rounded-lg px-4 py-2 font-semibold hover:bg-gray-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
         >
           Register
         </button>

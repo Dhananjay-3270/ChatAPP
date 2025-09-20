@@ -6,5 +6,10 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [menuOpen, setMenu] = useState(false);
-  return <Hamburger open={menuOpen} setOpen={setMenu} />;
+  return (
+    <div className="flex flex-col">
+      <Hamburger open={menuOpen} setOpen={setMenu} />
+      <div className="flex-1">{children}</div>
+    </div>
+  );
 };

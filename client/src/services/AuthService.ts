@@ -4,7 +4,14 @@ import { Apiendpoints } from "./Endpoints";
 export type LoginParams = {
     email: string;
     password: string;
-};
+}
+export type RegisterParams = {
+    fullName: string,
+    userName: string,
+    email: string,
+    password: string,
+    ConfirmPassword: string
+}
 
 export class AuthService {
 
@@ -32,6 +39,18 @@ export class AuthService {
         )
 
 
+    }
+
+    static register = (params :RegisterParams) => {
+
+          return NetworkManager.getInstance().appRequest(
+            {
+                method: HttpMethod.POST,
+                url: Apiendpoints.register,
+                data: JSON.stringify(params),
+
+            }
+        )
     }
 
 }

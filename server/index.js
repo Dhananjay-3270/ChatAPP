@@ -1,9 +1,11 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const userRoutes = require("./routes/authRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const server = express();
+const cookieParser = require('cookie-parser')
 
 connectDB(); // Connect to MongoDB
 const port = 3000;
@@ -12,8 +14,10 @@ const corsOptions = {
   credentials: true, // if you use cookies or authentication
 };
 server.use(express.json());
+server.use(cookieParser())
 server.use(cors(corsOptions));
-server.use("/user", userRoutes);
+server.use("/api/user", userRoutes);
+server.use("/api/message", messageRoutes);
 
 server.listen(port, () => {
   console.log(`server listening on port ${port}`);

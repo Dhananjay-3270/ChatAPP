@@ -7,18 +7,18 @@ import Home from "./pages/Home";
 import { Navigate } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { UserContextProvider } from "./Context/UserContext";
+import { useUser } from "./Context/UserContext";
 
-const App: React.FC = () => {
-
-  const isAuth = false;
+const AppContent: React.FC = () => {
+  const { isAuth } = useUser();
+  console.log(isAuth)
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
       <Route
         path="/"
         element={
-          isAuth ? (
+          !isAuth ? (
             <Navigate to="/login" replace />
           ) : (
             <Layout>
@@ -29,7 +29,17 @@ const App: React.FC = () => {
       >
         <Route path="/home" element={<Home />} />
       </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <UserContextProvider>
+      <AppContent />
+    </UserContextProvider>
   );
 };
 

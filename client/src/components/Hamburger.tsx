@@ -1,15 +1,6 @@
-import {
-  Menu,
-  Home,
-  MessageSquare,
-  Dock,
-  UserPen,
-  Settings,
-  LogOut,
-} from "lucide-react";
+import { UserPen, Settings, LogOut ,MessageCircle} from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
 interface Hamburgerprops {
@@ -32,7 +23,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
     }
   };
   return (
-    <div className="flex flex-row justify-between relative p-2">
+    <div className="flex flex-row justify-between relative p-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       {/* Overlay for dim effect */}
       {open && (
         <div
@@ -41,63 +32,33 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
         />
       )}
 
-      <div className="z-20">
-        {!open && (
-          <Menu onClick={() => setOpen(!open)} style={{ cursor: "pointer" }} />
-        )}
-        {open && (
-          <div
-            className="sidebar fixed left-0 top-0 w-48 h-screen px-6 py-8 bg-white shadow-2xl z-30 transition-all"
-            onClick={() => setOpen(!open)}
-          >
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/Home" onClick={() => setOpen(false)}>
-                    <div className="flex items-center gap-3 m-3 cursor-pointer text-gray-800 hover:bg-gray-200 rounded px-3 py-2 transition">
-                      <Home className="text-gray-700" />
-                      Home
-                    </div>
-                  </Link>
-                </li>
-                <li>
-                  <div className="flex items-center gap-3 m-3 cursor-pointer text-gray-800 hover:bg-gray-200 rounded px-3 py-2 transition">
-                    <MessageSquare className="text-gray-700" />
-                    Chat
-                  </div>
-                </li>
-                <li>
-                  <div className="flex items-center gap-3 m-3 cursor-pointer text-gray-800 hover:bg-gray-200 rounded px-3 py-2 transition">
-                    <Dock className="text-gray-700" />
-                    About
-                  </div>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        )}
+      <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
+       <MessageCircle/>
       </div>
       <div className="profile-section relative flex items-center">
         <UserPen
-          className="cursor-pointer text-gray-700"
+          className="cursor-pointer text-gray-700 dark:text-gray-300 pr-1 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           onClick={() => setProfileToggle(!profiletoggle)}
           size={28}
         />
 
         {profiletoggle && (
-          <div className="absolute top-10 right-0 w-44 bg-white rounded-lg shadow-xl z-40 p-3 flex flex-col gap-2">
+          <div className="absolute top-10 right-0 w-44 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-40 p-3 flex flex-col gap-2 border border-gray-200 dark:border-gray-600">
             <button
-              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 text-gray-800 transition"
+              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition"
               onClick={() => setProfileToggle(false)}
             >
-              <Settings className="text-gray-700" size={20} />
+              <Settings
+                className="text-gray-700 dark:text-gray-300"
+                size={20}
+              />
               Settings
             </button>
             <button
-              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-red-100 text-red-600 transition"
+              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition"
               onClick={handleLogout}
             >
-              <LogOut className="text-red-500" size={20} />
+              <LogOut className="text-red-500 dark:text-red-400" size={20} />
               Logout
             </button>
           </div>

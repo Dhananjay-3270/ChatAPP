@@ -1,5 +1,6 @@
 export const Apiendpoints = {
-
-    login: '/user/login',
-    logout: '/user/logout'
+    login: '/api/user/login',
+    logout: '/api/user/logout',
+    register: '/api/user/register',
+    getUsers: '/api/message/getuser'
 }

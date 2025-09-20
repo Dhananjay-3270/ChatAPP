@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
+import { useUser } from "../Context/UserContext";
+import type { User } from "../Context/UserContext";
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-
+  const { login } = useUser();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,6 +23,7 @@ export const Login: React.FC = () => {
     try {
       const response = await AuthService.login(formData);
       if (response.status === StatusCode.OK) {
+        login(response.data as User);
         navigate("/home");
       }
     } catch (error) {
@@ -43,7 +46,7 @@ export const Login: React.FC = () => {
               className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl flex flex-col gap-5"
               onSubmit={handleSubmit}
             >
-              <h2 className="text-3xl font-bold mb-2 text-center text-blue-700 dark:text-blue-400">
+              <h2 className="text-3xl font-bold mb-2 text-center text-black dark:text-blue-400">
                 Welcome Back
               </h2>
               <p className="text-gray-600 dark:text-gray-400 text-center mb-4">
@@ -70,7 +73,7 @@ export const Login: React.FC = () => {
               />
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold transition-colors"
+                className="bg-black  dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold transition-colors"
               >
                 Sign In
               </button>
@@ -91,24 +94,24 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Right side - Welcome Message */}
-        <div className="hidden lg:flex flex-1 items-center justify-center bg-blue-600 dark:bg-blue-800 text-white">
+        <div className="hidden lg:flex flex-1 items-center justify-center bg-black text-white">
           <div className="max-w-md text-center px-8">
             <h1 className="text-4xl font-bold mb-6">Welcome to ChatApp</h1>
-            <p className="text-xl mb-8 text-blue-100">
+            <p className="text-xl mb-8 text-white">
               Connect with friends, share moments, and stay in touch with the
               people who matter most.
             </p>
-            <div className="space-y-4 text-blue-100">
+            <div className="space-y-4 text-white">
               <div className="flex items-center justify-center space-x-3">
-                <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-white rounded-full"></div>
                 <span>Real-time messaging</span>
               </div>
               <div className="flex items-center justify-center space-x-3">
-                <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-white rounded-full"></div>
                 <span>Secure conversations</span>
               </div>
               <div className="flex items-center justify-center space-x-3">
-                <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
+                <div className="w-2 h-2 bg-white rounded-full"></div>
                 <span>Cross-platform support</span>
               </div>
             </div>
