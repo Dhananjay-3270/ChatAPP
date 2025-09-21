@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
+import Button from "../components/Button";
 interface User {
   fullName: string;
   userName: string;
@@ -110,12 +111,9 @@ export const Register: React.FC = () => {
           onChange={handleChange}
           required
         />
-        <button
-          type="submit"
-          className="bg-black text-white rounded-lg px-4 py-2 font-semibold hover:bg-gray-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition"
-        >
+        <Button type="submit" fullWidth>
           Register
-        </button>
+        </Button>
       </form>
     </div>
   );

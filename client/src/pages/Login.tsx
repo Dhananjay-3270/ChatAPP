@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
 import { useUser } from "../Context/UserContext";
 import type { User } from "../Context/UserContext";
+import Button from "../components/Button";
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useUser();
@@ -71,22 +71,16 @@ export const Login: React.FC = () => {
                 onChange={handleChange}
                 required
               />
-              <button
-                type="submit"
-                className="bg-black  dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold transition-colors"
-              >
+              <Button type="submit" fullWidth>
                 Sign In
-              </button>
+              </Button>
 
               <div className="text-center">
                 <span className="text-gray-600 dark:text-gray-400">
                   New to our platform?{" "}
-                  <Link
-                    to="/register"
-                    className="text-blue-600 dark:text-blue-400 font-semibold hover:underline transition-colors"
-                  >
-                    Create an account
-                  </Link>
+                  <Button as="link" to="/register" variant="ghost">
+                    Register
+                  </Button>
                 </span>
               </div>
             </form>

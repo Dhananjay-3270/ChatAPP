@@ -3,6 +3,7 @@ import { greeting } from "../utils/helper";
 import { useUser } from "../Context/UserContext";
 import { HomePageService } from "../services/HomePage";
 import { StatusCode } from "../../core/utils/enum";
+import Button from "../components/Button";
 interface Config {
   greeting: object;
   recentChats: object;
@@ -34,6 +35,9 @@ const Home: React.FC = () => {
             <p className="text-muted-foreground mb-4">
               You have 4 unread messages and 2 new group invitations.
             </p>
+           <Button >
+            Open Chat
+            </Button> 
           </div>
         </div>
         <div className=""></div>
