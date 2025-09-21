@@ -16,7 +16,14 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    const token = jwt.sign({ email, password }, secretkey);
+    const token = jwt.sign(
+      {
+        email: existingUser.email,
+        password: existingUser.password,
+        role: existingUser.role,
+      },
+      secretkey
+    );
     res.cookie("authcookie", token, {
       maxAge: 900000,
       httpOnly: true,
@@ -28,6 +35,7 @@ const login = async (req, res) => {
       userName: existingUser.userName,
       email: existingUser.email,
       age: existingUser.age,
+      role: existingUser.role,
     };
     return res.status(200).json({ message: "Login successful", data: user });
   } catch (error) {

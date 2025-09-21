@@ -3,12 +3,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
+import { useUser } from "../Context/UserContext";
 interface Hamburgerprops {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
+  const {user} = useUser()
   const navigate = useNavigate();
   const [profiletoggle, setProfileToggle] = useState(false);
   const handleLogout = async (e: React.FormEvent) => {
@@ -37,7 +39,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
       </div>
       <div className="profile-section relative flex items-center gap-2.5 mr-2">
         <div className="flex items-center">
-          <h2>Dhananjay Shinde</h2>
+          <h2>{user?.fullName}</h2>
         </div>
         <UserPen
           className="cursor-pointer text-gray-700 dark:text-gray-300 pr-1 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
