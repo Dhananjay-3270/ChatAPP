@@ -111,7 +111,7 @@ export const Register: React.FC = () => {
           onChange={handleChange}
           required
         />
-        <Button type="submit" fullWidth>
+        <Button as="button" type="submit" fullWidth>
           Register
         </Button>
       </form>
