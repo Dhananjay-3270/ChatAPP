@@ -32,7 +32,18 @@ const userSchema = new mongoose.Schema(
       enum: ["super_admin", "admin", "user"],
       default: "user",
     },
-    status: { type: String, default: "Available" },
+    status: {
+      state: {
+        type: String,
+        enum: ["online", "offline", "busy", "away"],
+        default: "offline",
+      },
+      description: {
+        type: String,
+        default: "available", // editable free-text
+        maxlength: 100,
+      },
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields

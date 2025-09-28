@@ -20,21 +20,34 @@ interface Config {
   status: object;
   quickActions: QuickAction[];
 }
+interface Status {
+  state: "online" | "offline" | "away" | "busy";
+  description: string;
+}
 
 const Home: React.FC = () => {
   const { user } = useUser();
   const [config, setConfig] = useState<Config | null>(null);
-
+  const [status, setStatus] = useState<Status | null>(null);
+  console.log(status);
   useEffect(() => {
     const getConfig = async () => {
-      const response = await HomePageService.getConfigDetails();
-      if (response.status === StatusCode.OK) {
-        setConfig(response.data as Config);
+      try {
+        const configResponse = await HomePageService.getConfigDetails();
+        if (configResponse.status === StatusCode.OK) {
+          setConfig(configResponse.data as Config);
+        }
+        const statusResponse = await HomePageService.getStatus();
+        if (statusResponse.status === StatusCode.OK) {
+          setStatus(statusResponse.data as Status);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
     getConfig();
   }, []);
-  console.log(config);
+
   return (
     <div className="h-screen  dark:bg-gray-900">
       <div className="flex flex-row  h-full">
@@ -49,12 +62,14 @@ const Home: React.FC = () => {
             <Button>Open Chat</Button>
           </div>
           <div className="mt-5">
-            <h3 className="text-lg font-semibold mb-4 text-left pl-5">Quick Actions</h3>
+            <h3 className="text-lg font-semibold mb-4 text-left pl-5">
+              Quick Actions
+            </h3>
             <div className="grid grid-cols-3 gap-4">
               {config?.quickActions.map((action, index) => {
                 const IconComponent = getIcons(index);
                 return (
-                  <Card size="lg" key={index}>
+                  <Card key={index}>
                     <CardHeader
                       title={action.label}
                       icon={<IconComponent size={20} />}
@@ -62,7 +77,7 @@ const Home: React.FC = () => {
                     <CardContent
                       description={action.description}
                       alignment="left"
-                    />
+                    />{" "}
                   </Card>
                 );
               })}

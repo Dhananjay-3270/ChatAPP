@@ -29,7 +29,14 @@ const login = async (req, res) => {
       httpOnly: true,
       sameSite: "lax", // or 'none' if using HTTPS
       // secure: true, // uncomment if using HTTPS
-    });
+    }); // Update user status to online
+    await User.updateOne(
+      { email: existingUser.email },
+      {
+        "status.state": "online",
+        "status.description": existingUser.status.description || "Available",
+      }
+    );
     const user = {
       fullName: existingUser.fullName,
       userName: existingUser.userName,

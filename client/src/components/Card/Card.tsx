@@ -14,8 +14,8 @@ const Card: React.FC<CardProps> = (props) => {
   const {
     variant = "default",
     size = "md",
-    hoverable = false,
-    clickable = false,
+    hoverable = true,
+    clickable = true,
     className = "",
     children,
   } = props;
@@ -37,18 +37,27 @@ const Card: React.FC<CardProps> = (props) => {
     md: "p-4",
     lg: "p-6",
   };
+  // Hover styles
+  const hoverStyles = hoverable
+    ? "hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+    : "";
+
+  // Clickable styles
+  const clickableStyles = clickable
+    ? "cursor-pointer active:scale-95"
+    : "cursor-default";
+
   const combinedClasses = cn(
     baseStyles,
     variantStyles[variant],
     sizeStyles[size],
+    hoverStyles,
+    clickableStyles,
     className
   );
+
   return (
-    <div
-      className={`card ${hoverable ? "hoverable" : ""} ${
-        clickable ? "clickable" : ""
-      }${combinedClasses}`}
-    >
+    <div className={combinedClasses} onClick={props.onClick}>
       {children}
     </div>
   );

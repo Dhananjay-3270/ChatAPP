@@ -17,5 +17,16 @@ export class HomePageService {
             }
         )
     }
+    static getStatus = () => {
 
+        return NetworkManager.getInstance().appRequest(
+
+            {
+                method: HttpMethod.GET,
+                url: Apiendpoints.getStatus
+            }
+        )
+
+
+    }
 }
