@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
 import { useUser } from "../Context/UserContext";
+import { InputSearch } from "./InputSearch/InputSearch";
+import { Search } from "lucide-react";
 interface Hamburgerprops {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
-  const {user} = useUser()
+  const { user } = useUser();
   const navigate = useNavigate();
   const [profiletoggle, setProfileToggle] = useState(false);
   const handleLogout = async (e: React.FormEvent) => {
@@ -36,6 +38,16 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
 
       <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
         <MessageCircle />
+      </div>
+      <div className=" flex justify-center">
+        <InputSearch
+          variant="default"
+          width="lg"
+          size="md"
+          placeholder="Search conversation and people..."
+          leftIcon={<Search />}
+          
+        />
       </div>
       <div className="profile-section relative flex items-center gap-2.5 mr-2">
         <div className="flex items-center">

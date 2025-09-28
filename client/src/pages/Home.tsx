@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             <Button>Open Chat</Button>
           </div>
           <div className="mt-5">
-            <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+            <h3 className="text-lg font-semibold mb-4 text-left pl-5">Quick Actions</h3>
             <div className="grid grid-cols-3 gap-4">
               {config?.quickActions.map((action, index) => {
                 const IconComponent = getIcons(index);
