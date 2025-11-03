@@ -16,7 +16,7 @@ const getStatus = async (req, res) => {
     return res.status(200).json({
       message: "Status retrieved successfully",
       data: {
-        status: user.status || "offline", // Default to offline if no status
+        status: user.status // Default to offline if no status
       },
     });
   } catch (error) {

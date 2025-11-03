@@ -9,6 +9,7 @@ import Card from "../components/Card/Card";
 import { getIcons } from "../utils/getIcons";
 import CardHeader from "../components/Card/CardHeader";
 import CardContent from "../components/Card/CardContent";
+import StatusComponent from "../components/Status/StatusComponent";
 interface QuickAction {
   actionId: string;
   label: string;
@@ -20,16 +21,20 @@ interface Config {
   status: object;
   quickActions: QuickAction[];
 }
+
 interface Status {
   state: "online" | "offline" | "away" | "busy";
   description: string;
+}
+interface StatusResponse {
+  status: Status;
 }
 
 const Home: React.FC = () => {
   const { user } = useUser();
   const [config, setConfig] = useState<Config | null>(null);
   const [status, setStatus] = useState<Status | null>(null);
-  console.log(status);
+
   useEffect(() => {
     const getConfig = async () => {
       try {
@@ -39,7 +44,8 @@ const Home: React.FC = () => {
         }
         const statusResponse = await HomePageService.getStatus();
         if (statusResponse.status === StatusCode.OK) {
-          setStatus(statusResponse.data as Status);
+          const statusData = statusResponse.data as StatusResponse;
+          setStatus(statusData.status as Status);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -94,6 +100,7 @@ const Home: React.FC = () => {
           </div>
           <div className=" border border-gray-300 rounded-lg h-1/2 mt-5">
             <h1>Your Status</h1>
+            <StatusComponent status={status} />
           </div>
         </div>
       </div>

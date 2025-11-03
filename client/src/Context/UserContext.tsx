@@ -20,15 +20,16 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   // Temporarily set to true for testing - change back to null for production
   const [user, setuser] = useState<User | null>(null);
-
+  const [isAuth, setisAuth] = useState(false);
   const login = (user: User) => {
     setuser(user);
+    setisAuth(!!user);
   };
   const logout = () => {
     setuser(null);
   };
   return (
-    <UserContext.Provider value={{ user, login, logout, isAuth: !!user }}>
+    <UserContext.Provider value={{ user, login, logout, isAuth }}>
       {children}
     </UserContext.Provider>
   );
