@@ -20,6 +20,7 @@ interface ButtonAsButton
   as?: "button";
   to?: never;
   href?: never;
+
 }
 
 // Button as React Router Link

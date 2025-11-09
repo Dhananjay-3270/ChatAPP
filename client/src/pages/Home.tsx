@@ -22,7 +22,7 @@ interface Config {
   quickActions: QuickAction[];
 }
 
-interface Status {
+export interface Status {
   state: "online" | "offline" | "away" | "busy";
   description: string;
 }
@@ -53,6 +53,22 @@ const Home: React.FC = () => {
     };
     getConfig();
   }, []);
+
+  useEffect(() => {
+    const updateStatus = async () => {
+      try {
+        const response = await HomePageService.updateStatus(status as Status);
+        if (response.status === StatusCode.OK) {
+          console.log("first");
+        }
+      } catch (err) {
+        console.error("Error updating Status:", err);
+      }
+    };
+    if (status != null) {
+      updateStatus();
+    }
+  }, [status]);
 
   return (
     <div className="h-screen  dark:bg-gray-900">
@@ -99,8 +115,7 @@ const Home: React.FC = () => {
             <div className="">Coming Soon</div>
           </div>
           <div className=" border border-gray-300 rounded-lg h-1/2 mt-5">
-            <h1>Your Status</h1>
-            <StatusComponent status={status} />
+            <StatusComponent status={status} setStatus={setStatus} />
           </div>
         </div>
       </div>

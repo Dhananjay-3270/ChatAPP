@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { UserPen, Settings, LogOut, MessageCircle } from "lucide-react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
@@ -35,9 +35,14 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
           onClick={() => setOpen(false)}
         />
       )}
-
-      <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
-        <MessageCircle />
+      <div className="flex flex-row gap-2.5">
+        <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
+          <MessageCircle />
+        </div>
+        <div className="flex flex-col justify-center">
+          <h1 className="text-xl font-semibold text-foreground">ChatApp</h1>
+          <p className="text-sm text-muted-foreground">Dashboard</p>
+        </div>
       </div>
       <div className=" flex justify-center">
         <InputSearch
@@ -46,7 +51,6 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
           size="md"
           placeholder="Search conversation and people..."
           leftIcon={<Search />}
-          
         />
       </div>
       <div className="profile-section relative flex items-center gap-2.5 mr-2">

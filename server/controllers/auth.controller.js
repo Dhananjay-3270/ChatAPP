@@ -33,7 +33,7 @@ const login = async (req, res) => {
     await User.updateOne(
       { email: existingUser.email },
       {
-        "status.state": "online",
+        "status.state": existingUser.status.state,
         "status.description": existingUser.status.description || "Available",
       }
     );

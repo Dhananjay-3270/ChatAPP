@@ -4,5 +4,6 @@ export const Apiendpoints = {
     register: '/api/user/register',
     getUsers: '/api/message/getuser',
     getHomePageConfig: '/api/homepage/config',
-    getStatus: '/api/status/'
+    getStatus: '/api/status/',
+    updateStatus: '/api/status/updateStatus'
 }
