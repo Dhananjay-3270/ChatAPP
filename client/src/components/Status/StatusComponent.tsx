@@ -5,6 +5,7 @@ import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
 import DropDown from "../DropDown/DropDown";
 import type { Status } from "../../pages/Home";
+import EditableField from "../EditableField/EditableField";
 interface StatusComponentProps {
   status: {
     state: "online" | "offline" | "away" | "busy";
@@ -44,10 +45,17 @@ const StatusComponent: React.FC<StatusComponentProps> = (props) => {
           </div>
         </CardHeader>
 
-        <CardContent
-          description={status?.description}
-          alignment="left"
-        ></CardContent>
+        <CardContent description={"custom"} alignment="left">
+          <EditableField
+            value={status?.description}
+            onSave={(newValue) => {
+              setStatus({
+                ...status,
+                description: newValue as string,
+              });
+            }}
+          />
+        </CardContent>
       </Card>
     </>
   );
