@@ -4,6 +4,7 @@ const userRoutes = require("./routes/authRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const homePageRoutes = require("./routes/configRoutes");
 const statusRoutes = require("./routes/statusRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const server = express();
@@ -20,6 +21,7 @@ server.use(cookieParser());
 server.use(cors(corsOptions));
 server.use("/api/user", userRoutes);
 server.use("/api/status", statusRoutes);
+server.use("/api/chat", chatRoutes);
 server.use("/api/message", messageRoutes);
 server.use("/api/homepage", homePageRoutes);
 

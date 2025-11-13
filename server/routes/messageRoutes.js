@@ -4,11 +4,10 @@ const verifyAuth = require("../middleware/verifyAuth");
 const User = require("../models/user");
 const {
   getAllUsers,
-  getChatAcess,
+  sendMessage,
 } = require("../controllers/message.controller");
 
 router.get("/getuser", verifyAuth, getAllUsers);
-
-router.get("/getChatAcess", verifyAuth, getChatAcess);
+router.get("/sendMessage", verifyAuth, sendMessage);
 
 module.exports = router;

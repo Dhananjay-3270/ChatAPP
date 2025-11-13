@@ -1,5 +1,5 @@
 const User = require("../models/user");
-
+const Message = require("../models/message");
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find({ email: { $ne: req.user.email } }).select(
@@ -10,13 +10,20 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch Users" });
   }
 };
-const getChatAcess = async (req, res) => {
-  try {
-    const userEmail = req.user.email;
-    const userEmail2 = req.body.userId
-    
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch Users" });
-  }
+
+const sendMessage = async (req, res) => {
+  const userEmail = req.user.email;
+  const userA = await User.findOne({ email: userEmail });
+
+  const data = req.body;
+  const chatId = data.chatId;
+  const content = data.content;
+  const message = await Message.create({
+    sender: userA._id,
+    content: content,
+    chat: chatId,
+  });
+  res.status(200).json({ data: message });
 };
-module.exports = { getAllUsers, getChatAcess };
+
+module.exports = { getAllUsers, sendMessage };
