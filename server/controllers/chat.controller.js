@@ -1,6 +1,6 @@
 const Chat = require("../models/chat");
 const User = require("../models/user");
-const Message = require("../models/message")
+const Message = require("../models/message");
 
 const getChatAcess = async (req, res) => {
   try {
@@ -56,4 +56,26 @@ const getMessages = async (req, res) => {
   // Step 3: Return
   res.status(200).json({ messages });
 };
-module.exports = { getChatAcess, getMessages };
+const getAllChats = async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+    const userA = await User.findOne({ email: userEmail }).select("_id");
+    if (!userA) return res.status(404).json({ error: "User not found" });
+
+    const chats = await Chat.find({ members: userA._id })
+      .populate("members", "fullName userName avatar")
+      .populate({
+        path: "latestMessage",
+        populate: { path: "sender", select: "fullName userName avatar" },
+      })
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    return res.status(200).json({ data: chats });
+  } catch (err) {
+    console.error("getAllChats error:", err);
+    return res.status(500).json({ error: "Failed to fetch chats" });
+  }
+};
+
+module.exports = { getChatAcess, getMessages, getAllChats };

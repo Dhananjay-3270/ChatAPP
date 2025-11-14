@@ -8,6 +8,6 @@ const {
 } = require("../controllers/message.controller");
 
 router.get("/getuser", verifyAuth, getAllUsers);
-router.get("/sendMessage", verifyAuth, sendMessage);
+router.post("/sendMessage", verifyAuth, sendMessage);
 
 module.exports = router;
