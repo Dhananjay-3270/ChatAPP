@@ -9,10 +9,10 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { UserContextProvider } from "./Context/UserContext";
 import { useUser } from "./Context/UserContext";
-
+import ChatHome from "./components/ChatUI/ChatHome";
 const AppContent: React.FC = () => {
   const { isAuth } = useUser();
-  console.log(isAuth);
+
   return (
     <Routes>
       <Route
@@ -28,6 +28,7 @@ const AppContent: React.FC = () => {
         }
       >
         <Route path="/home" element={<Home />} />
+        <Route path="/chathome" element={<ChatHome />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

@@ -1,6 +1,6 @@
 import type React from "react";
 import { cn } from "../../utils/cn";
-interface CardProps {
+interface C {
   variant?: "default" | "elevated" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   hoverable?: boolean;

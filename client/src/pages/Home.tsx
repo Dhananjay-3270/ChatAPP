@@ -59,7 +59,7 @@ const Home: React.FC = () => {
       try {
         const response = await HomePageService.updateStatus(status as Status);
         if (response.status === StatusCode.OK) {
-          console.log("first");
+          console.log("Status Updated");
         }
       } catch (err) {
         console.error("Error updating Status:", err);
@@ -81,7 +81,9 @@ const Home: React.FC = () => {
             <p className="text-muted-foreground mb-4">
               You have 4 unread messages and 2 new group invitations.
             </p>
-            <Button>Open Chat</Button>
+            <Button to="/chathome" as="link">
+              Open Chat
+            </Button>
           </div>
           <div className="mt-5">
             <h3 className="text-lg font-semibold mb-4 text-left pl-5">
