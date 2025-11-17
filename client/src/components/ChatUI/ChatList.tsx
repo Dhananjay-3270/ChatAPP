@@ -21,7 +21,7 @@ interface ChatItem {
 }
 const ChatList: React.FC = () => {
   const [chats, setChats] = useState<ChatItem[] | null>(null);
-
+  const [selectedChat, setSelectedChat] = useState<ChatItem | null>(null);
   useEffect(() => {
     const getChats = async () => {
       const chats = await ChatService.getChats();
@@ -31,7 +31,6 @@ const ChatList: React.FC = () => {
     };
     getChats();
   }, []);
-  console.log(chats);
 
   return (
     <div className="flex flex-col">
@@ -53,7 +52,15 @@ const ChatList: React.FC = () => {
       <div className="flex flex-col overflow-y-scroll">
         {chats &&
           chats?.map((chat, index) => {
-            return <ChatListItem key={index} chat={chat} />;
+            return (
+              <ChatListItem
+                key={index}
+                chat={chat}
+                isSelected={selectedChat?._id === chat._id}
+               
+                onClick={(chat) => setSelectedChat(chat)}
+              />
+            );
           })}
       </div>
     </div>
