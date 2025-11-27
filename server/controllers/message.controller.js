@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Chat = require("../models/chat");
 const Message = require("../models/message");
 const getAllUsers = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
+  console.log("coming");
   const userEmail = req.user.email;
   const userA = await User.findOne({ email: userEmail });
 
@@ -23,6 +25,7 @@ const sendMessage = async (req, res) => {
     content: content,
     chat: chatId,
   });
+  await Chat.findByIdAndUpdate(chatId, { latestMessage: message._id });
   res.status(200).json({ data: message });
 };
 
