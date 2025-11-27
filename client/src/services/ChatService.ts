@@ -15,7 +15,15 @@ export class ChatService {
 
             })
     }
+    static getAllMessages = (chatId) => {
+        return NetworkManager.getInstance().appRequest(
+            {
+                method: HttpMethod.GET,
+                url: Apiendpoints.getAllMessages(chatId),
 
+
+            })
+    }
 
 
 } 

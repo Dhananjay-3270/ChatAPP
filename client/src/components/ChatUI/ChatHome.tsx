@@ -5,7 +5,7 @@ import ChatList from "./ChatList";
 import ChatBox from "./ChatBox";
 const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
-  console.log(selectedChat);
+
   return (
     <div className="flex h-screen">
       <div className="w-1/4 border-r">
@@ -15,7 +15,7 @@ const ChatHome: React.FC = () => {
         />
       </div>
       <div className="flex-1">
-        <ChatBox />
+        <ChatBox selectedChat={selectedChat} />
       </div>
     </div>
   );
