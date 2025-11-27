@@ -9,7 +9,6 @@ const StatusDot: React.FC<StatusDotProps> = ({ state }) => {
     away: "bg-orange-400",
   };
 
-  console.log(STATUS_COLORS[state]);
   return (
     <span
       className={`inline-block w-2 h-2 rounded-full ${STATUS_COLORS[state]}`}

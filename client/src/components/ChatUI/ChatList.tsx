@@ -5,23 +5,12 @@ import { StatusCode } from "../../../core/utils/enum";
 import { EllipsisVertical, Search } from "lucide-react";
 import { InputSearch } from "../InputSearch/InputSearch";
 import ChatListItem from "./ChatListItem";
-interface ChatUser {
-  _id: string;
-  fullName: string;
-  userName: string;
-}
+import type { ChatListProps, ChatItem } from "../../types/chat";
 
-interface ChatItem {
-  _id: string;
-  isGroup: boolean;
-  members: ChatUser[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-const ChatList: React.FC = () => {
+const ChatList: React.FC<ChatListProps> = (props) => {
+  const { selectedChat, setSelectedChat } = props;
   const [chats, setChats] = useState<ChatItem[] | null>(null);
-  const [selectedChat, setSelectedChat] = useState<ChatItem | null>(null);
+
   useEffect(() => {
     const getChats = async () => {
       const chats = await ChatService.getChats();
@@ -57,7 +46,6 @@ const ChatList: React.FC = () => {
                 key={index}
                 chat={chat}
                 isSelected={selectedChat?._id === chat._id}
-               
                 onClick={(chat) => setSelectedChat(chat)}
               />
             );

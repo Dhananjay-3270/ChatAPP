@@ -1,13 +1,11 @@
+import type { ChatUtilsChat } from "../types/chat";
+
+// Define Member type locally if not exported from chat types
 interface Member {
     userName: string;
     displayName?: string;
     firstName?: string;
     lastName?: string;
-    _id: string;
-}
-
-interface Chat {
-    members: Member[];
 }
 
 /**
@@ -16,7 +14,7 @@ interface Chat {
  * @param chat - The chat object containing members array
  * @returns Array of other members or null if invalid input
  */
-export const getOtherMembers = (userName: string, chat: Chat): Member[] | null => {
+export const getOtherMembers = (userName: string, chat: ChatUtilsChat): Member[] | null => {
     // Validate inputs
     if (!userName || !chat) {
         return null;
@@ -41,7 +39,7 @@ export const getOtherMembers = (userName: string, chat: Chat): Member[] | null =
  * @param chat - The chat object
  * @returns Display name for the chat or fallback
  */
-export const getChatDisplayName = (userName: string, chat: Chat): string => {
+export const getChatDisplayName = (userName: string, chat: ChatUtilsChat): string => {
     const otherMembers = getOtherMembers(userName, chat);
 
     if (!otherMembers || otherMembers.length === 0) {
@@ -73,6 +71,9 @@ export const getChatDisplayName = (userName: string, chat: Chat): string => {
 
     return remainingCount > 0 ? `${names} and ${remainingCount} others` : names;
 };
+export const getLatestMessage = () => {
+
+}
 
 /**
  * Get initials for chat avatar (useful for group chats)
@@ -80,7 +81,7 @@ export const getChatDisplayName = (userName: string, chat: Chat): string => {
  * @param chat - The chat object
  * @returns Initials string for avatar
  */
-export const getChatInitials = (userName: string, chat: Chat): string => {
+export const getChatInitials = (userName: string, chat: ChatUtilsChat): string => {
     const otherMembers = getOtherMembers(userName, chat);
 
     if (!otherMembers || otherMembers.length === 0) {
