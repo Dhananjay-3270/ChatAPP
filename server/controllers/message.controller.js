@@ -13,7 +13,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
-  console.log("coming");
+
   const userEmail = req.user.email;
   const userA = await User.findOne({ email: userEmail });
 
