@@ -54,7 +54,7 @@ const getMessages = async (req, res) => {
     .sort({ createdAt: 1 }); // oldest to newest
 
   // Step 3: Return
-  res.status(200).json({ messages });
+  res.status(200).json({ data: messages });
 };
 const getAllChats = async (req, res) => {
   try {
