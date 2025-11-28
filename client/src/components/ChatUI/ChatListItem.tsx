@@ -9,6 +9,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
   onClick,
   isSelected,
 }) => {
+  console.log(chat);
   const { user } = useUser();
 
   return (
@@ -21,12 +22,12 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
       onClick={() => onClick(chat)}
     >
       <ProfileAvatar
-        name={getChatDisplayName(user?.userName || "", chat)}
+        name={getChatDisplayName(user?.userName || "", chat?.members)}
         size="sm"
       />
       <div className="flex-1 flex-col">
         <p className="font-medium truncate">
-          {getChatDisplayName(user?.userName || "", chat)}
+          {getChatDisplayName(user?.userName || "", chat?.members)}
         </p>
         <div className="flex justify-between items-end">
           <p className="text-sm text-muted-foreground truncate leading-tight flex-1">

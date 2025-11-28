@@ -62,3 +62,27 @@ export interface ChatBoxProps {
 export interface ChatUtilsChat {
     members: ChatUser[];
 }
+
+
+export interface Status {
+    state: string;
+    description: string;
+}
+
+export interface Sender {
+    status: Status;
+    _id: string;
+    fullName: string;
+    userName: string;
+    email: string;
+}
+
+export interface Message {
+    _id: string;
+    sender: Sender;
+    content: string;
+    chat: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}

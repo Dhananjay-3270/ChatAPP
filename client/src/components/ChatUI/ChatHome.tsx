@@ -3,6 +3,7 @@ import type React from "react";
 import type { Chat } from "../../types/chat";
 import ChatList from "./ChatList";
 import ChatBox from "./ChatBox";
+import NoChatSelected from "../NoChatSelected";
 const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
 
@@ -15,7 +16,11 @@ const ChatHome: React.FC = () => {
         />
       </div>
       <div className="flex-1">
-        <ChatBox selectedChat={selectedChat} />
+        {selectedChat ? (
+          <ChatBox selectedChat={selectedChat} />
+        ) : (
+          <NoChatSelected />
+        )}
       </div>
     </div>
   );

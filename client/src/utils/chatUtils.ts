@@ -1,5 +1,5 @@
 import type { ChatUtilsChat } from "../types/chat";
-
+import type { ChatUser } from "../types/chat";
 // Define Member type locally if not exported from chat types
 interface Member {
     userName: string;
@@ -14,19 +14,19 @@ interface Member {
  * @param chat - The chat object containing members array
  * @returns Array of other members or null if invalid input
  */
-export const getOtherMembers = (userName: string, chat: ChatUtilsChat): Member[] | null => {
+export const getOtherMembers = (userName: string, members: ChatUser[]): Member[] | null => {
     // Validate inputs
-    if (!userName || !chat) {
+    if (!userName || !members) {
         return null;
     }
 
     // Check if members array exists and is valid
-    if (!Array.isArray(chat.members) || chat.members.length === 0) {
+    if (!Array.isArray(members) || members.length === 0) {
         return null;
     }
 
     // Filter out the current user
-    const otherMembers = chat.members.filter(
+    const otherMembers = members.filter(
         (member) => member?.userName && member.userName !== userName
     );
 
@@ -39,7 +39,11 @@ export const getOtherMembers = (userName: string, chat: ChatUtilsChat): Member[]
  * @param chat - The chat object
  * @returns Display name for the chat or fallback
  */
-export const getChatDisplayName = (userName: string, chat: ChatUtilsChat): string => {
+export const getChatDisplayName = (userName: string, chat: ChatUser[]|undefined): string => {
+    if (!chat) {
+        return 'Unknown Chat';
+    }
+    
     const otherMembers = getOtherMembers(userName, chat);
 
     if (!otherMembers || otherMembers.length === 0) {
