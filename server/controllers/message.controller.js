@@ -13,15 +13,14 @@ const getAllUsers = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
-
-  const userEmail = req.user.email;
-  const userA = await User.findOne({ email: userEmail });
+  const userA = req.user.userId;
+  // const userA = await User.findOne({ email: userEmail });
 
   const data = req.body;
   const chatId = data.chatId;
   const content = data.content;
   const message = await Message.create({
-    sender: userA._id,
+    sender: userA,
     content: content,
     chat: chatId,
   });

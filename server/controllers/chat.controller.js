@@ -4,10 +4,8 @@ const Message = require("../models/message");
 
 const getChatAcess = async (req, res) => {
   try {
-    const userEmail = req.user.email;
-
+    const userA = req.user.userId;
     const userEmail2 = req.body.email;
-    const userA = await User.findOne({ email: userEmail });
     const userB = await User.findOne({ email: userEmail2 });
 
     if (!userEmail2) {
@@ -15,7 +13,7 @@ const getChatAcess = async (req, res) => {
     }
     let chat = await Chat.findOne({
       isGroup: false,
-      members: { $all: [userA._id, userB._id] },
+      members: { $all: [userA, userB._id] },
     })
       .populate("members", "fullName userName email")
       .populate("latestMessage");
@@ -23,7 +21,7 @@ const getChatAcess = async (req, res) => {
       // If not, create new chat
       chat = await Chat.create({
         isGroup: false,
-        members: [userA._id, userB._id],
+        members: [userA, userB._id],
       });
     }
     res.status(200).json({ data: chat });
@@ -34,8 +32,8 @@ const getChatAcess = async (req, res) => {
 
 const getMessages = async (req, res) => {
   const { chatId } = req.params;
-  const userEmail = req.user.email;
-  const userA = await User.findOne({ email: userEmail });
+  const userA = req.user.userId;
+
   // Step 1: Verify that this user belongs to that chat
   const chat = await Chat.findById(chatId);
   if (!chat) {
@@ -43,7 +41,7 @@ const getMessages = async (req, res) => {
   }
 
   const isMember = chat.members.some(
-    (memberId) => memberId.toString() === userA._id.toString()
+    (memberId) => memberId.toString() === userA.toString()
   );
   if (!isMember) {
     return res.status(403).json({ message: "Access denied" });
@@ -58,11 +56,11 @@ const getMessages = async (req, res) => {
 };
 const getAllChats = async (req, res) => {
   try {
-    const userEmail = req.user.email;
-    const userA = await User.findOne({ email: userEmail }).select("_id");
+    const userA = req.user.userId;
+    // const userA = await User.findOne({ email: userEmail }).select("_id");
     if (!userA) return res.status(404).json({ error: "User not found" });
 
-    const chats = await Chat.find({ members: userA._id })
+    const chats = await Chat.find({ members: userA })
       .populate("members", "fullName userName avatar")
       .populate({
         path: "latestMessage",
