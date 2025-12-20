@@ -45,7 +45,7 @@ const StatusComponent: React.FC<StatusComponentProps> = (props) => {
           </div>
         </CardHeader>
 
-        <CardContent description={"custom"} alignment="left">
+        <CardContent description={"custom status"} alignment="left">
           <EditableField
             value={status?.description}
             onSave={(newValue) => {
