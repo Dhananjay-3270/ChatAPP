@@ -9,8 +9,13 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const server = express();
 const cookieParser = require("cookie-parser");
+const http = require("http"); // ⭐ NEW
+const { Server } = require("socket.io"); // ⭐ NEW
 
 connectDB(); // Connect to MongoDB
+const socketServer = http.createServer(server);
+const io = new Server(socketServer);
+
 const port = 3000;
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -24,7 +29,7 @@ server.use("/api/status", statusRoutes);
 server.use("/api/chat", chatRoutes);
 server.use("/api/message", messageRoutes);
 server.use("/api/homepage", homePageRoutes);
-
-server.listen(port, () => {
+io.on("connection", () => console.log("Socket Connected"));
+socketServer.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
