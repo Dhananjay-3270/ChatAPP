@@ -10,8 +10,29 @@ import { Register } from "./pages/Register";
 import { UserContextProvider } from "./Context/UserContext";
 import { useUser } from "./Context/UserContext";
 import ChatHome from "./components/ChatUI/ChatHome";
+import { socket } from "./websocket/socket";
+import { useEffect } from "react";
 const AppContent: React.FC = () => {
-  const { isAuth } = useUser();
+  const { isAuth, setisAuth } = useUser();
+  useEffect(() => {
+    const userDetails = localStorage.getItem("user");
+    if (userDetails) setisAuth(true);
+    socket.connect();
+    socket.on("connect", () => {
+      console.log("Client connected:", socket.id);
+    });
+    socket.on("connect_error", (err) => {
+      console.error("❌ Connection error:", err.message);
+    });
+    socket.on("disconnect", (reason) => {
+      console.log("Client: socket disconnected", reason);
+    });
+    return () => {
+      // Cleanup listeners only (NOT disconnect yet)
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
 
   return (
     <Routes>
@@ -30,7 +51,10 @@ const AppContent: React.FC = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/chathome" element={<ChatHome />} />
       </Route>
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={!isAuth ? <Login /> : <Navigate to="/home" replace />}
+      />
       <Route path="/register" element={<Register />} />
     </Routes>
   );
