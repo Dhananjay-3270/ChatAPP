@@ -12,7 +12,7 @@ interface Hamburgerprops {
 }
 
 export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const navigate = useNavigate();
   const [profiletoggle, setProfileToggle] = useState(false);
   const handleLogout = async (e: React.FormEvent) => {
@@ -20,6 +20,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
     try {
       const response = await AuthService.logout();
       if (response.status === StatusCode.OK) {
+        logout();
         navigate("/login");
       }
     } catch (error) {
