@@ -13,10 +13,13 @@ import ChatHome from "./components/ChatUI/ChatHome";
 import { socket } from "./websocket/socket";
 import { useEffect } from "react";
 const AppContent: React.FC = () => {
-  const { isAuth, setisAuth } = useUser();
+  const { isAuth, setisAuth, setuser } = useUser();
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
-    if (userDetails) setisAuth(true);
+    if (userDetails) {
+      setisAuth(true);
+      setuser(JSON.parse(userDetails))
+    }
     socket.connect();
     socket.on("connect", () => {
       console.log("Client connected:", socket.id);

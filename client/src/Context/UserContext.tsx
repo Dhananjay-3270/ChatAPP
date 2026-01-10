@@ -12,6 +12,7 @@ interface UserContextType {
   logout: () => void;
   isAuth: boolean | null;
   setisAuth: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setuser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -35,7 +36,9 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("user");
   };
   return (
-    <UserContext.Provider value={{ user, login, logout, isAuth, setisAuth }}>
+    <UserContext.Provider
+      value={{ user, login, logout, isAuth, setisAuth, setuser }}
+    >
       {children}
     </UserContext.Provider>
   );

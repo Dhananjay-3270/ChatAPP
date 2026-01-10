@@ -34,6 +34,7 @@ const Home: React.FC = () => {
   const { user } = useUser();
   const [config, setConfig] = useState<Config | null>(null);
   const [status, setStatus] = useState<Status | null>(null);
+  const [isStatusEdited, setIsStatusEdited] = useState(false);
 
   useEffect(() => {
     const getConfig = async () => {
@@ -68,8 +69,15 @@ const Home: React.FC = () => {
     if (status != null) {
       updateStatus();
     }
-  }, [status]);
+  }, [status, isStatusEdited]);
 
+  const handleStatusUpdate = (
+    state: "online" | "offline" | "away" | "busy",
+    description: string
+  ) => {
+    setIsStatusEdited(true);
+    setStatus({ state, description });
+  };
   return (
     <div className="h-screen  dark:bg-gray-900">
       <div className="flex flex-row  h-full">
@@ -117,7 +125,10 @@ const Home: React.FC = () => {
             <div className="">Coming Soon</div>
           </div>
           <div className=" border border-gray-300 rounded-lg h-1/2 mt-5">
-            <StatusComponent status={status} setStatus={setStatus} />
+            <StatusComponent
+              status={status}
+              handleStatusUpdate={handleStatusUpdate}
+            />
           </div>
         </div>
       </div>

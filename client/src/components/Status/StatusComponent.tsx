@@ -4,17 +4,19 @@ import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
 import DropDown from "../DropDown/DropDown";
-import type { Status } from "../../pages/Home";
 import EditableField from "../EditableField/EditableField";
 interface StatusComponentProps {
   status: {
     state: "online" | "offline" | "away" | "busy";
     description: string;
-  };
-  setStatus: React.Dispatch<React.SetStateAction<Status>>;
+  } | null;
+  handleStatusUpdate: (
+    state: "online" | "offline" | "away" | "busy",
+    description: string
+  ) => void;
 }
 const StatusComponent: React.FC<StatusComponentProps> = (props) => {
-  const { status, setStatus } = props;
+  const { status, handleStatusUpdate } = props;
 
   return (
     <>
@@ -22,7 +24,8 @@ const StatusComponent: React.FC<StatusComponentProps> = (props) => {
         <CardHeader title={"Your status"}>
           <div className="flex flex-row gap-14">
             <div>
-              {status?.state} <StatusDot state={status?.state} />
+              {status?.state}{" "}
+              {status?.state && <StatusDot state={status.state} />}
             </div>
             <DropDown
               value={status?.state}
@@ -34,10 +37,10 @@ const StatusComponent: React.FC<StatusComponentProps> = (props) => {
               ]}
               placeholder="change status"
               onChange={(value) =>
-                setStatus({
-                  ...status,
-                  state: value as "online" | "offline" | "away" | "busy",
-                })
+                handleStatusUpdate(
+                  value as "online" | "offline" | "away" | "busy",
+                  status?.description || ""
+                )
               }
               size="sm"
               width="sm"
@@ -47,12 +50,9 @@ const StatusComponent: React.FC<StatusComponentProps> = (props) => {
 
         <CardContent description={"custom status"} alignment="left">
           <EditableField
-            value={status?.description}
+            value={status?.description || ""}
             onSave={(newValue) => {
-              setStatus({
-                ...status,
-                description: newValue as string,
-              });
+              handleStatusUpdate(status?.state || "offline", newValue);
             }}
           />
         </CardContent>
