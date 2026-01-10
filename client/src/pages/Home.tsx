@@ -61,12 +61,13 @@ const Home: React.FC = () => {
         const response = await HomePageService.updateStatus(status as Status);
         if (response.status === StatusCode.OK) {
           console.log("Status Updated");
+          setIsStatusEdited(false);
         }
       } catch (err) {
         console.error("Error updating Status:", err);
       }
     };
-    if (status != null) {
+    if (status != null && isStatusEdited) {
       updateStatus();
     }
   }, [status, isStatusEdited]);
