@@ -8,10 +8,22 @@ import ProfileAvatar from "../Profile";
 import { getChatDisplayName } from "../../utils/chatUtils";
 import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
+import { socket } from "../../websocket/socket";
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[] | null>(null);
   const { selectedChat } = props;
+  useEffect(() => {
+    socket.emit("chat:join", {
+      chatId: selectedChat?._id,
+    });
+
+    return () => {
+      socket.emit("chat:leave", {
+        chatId: selectedChat?._id,
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const getAllMessages = async () => {

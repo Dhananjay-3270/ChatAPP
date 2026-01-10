@@ -21,8 +21,12 @@ const AppContent: React.FC = () => {
     socket.on("connect", () => {
       console.log("Client connected:", socket.id);
     });
+    socket.on("user:ping", (data) => {
+      console.log("PING RECEIVED:", data);
+    });
+
     socket.on("connect_error", (err) => {
-      console.error("❌ Connection error:", err.message);
+      console.error("Connection error:", err.message);
     });
     socket.on("disconnect", (reason) => {
       console.log("Client: socket disconnected", reason);

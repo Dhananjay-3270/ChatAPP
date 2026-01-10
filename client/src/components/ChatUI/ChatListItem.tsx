@@ -9,7 +9,6 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
   onClick,
   isSelected,
 }) => {
-  console.log(chat);
   const { user } = useUser();
 
   return (
