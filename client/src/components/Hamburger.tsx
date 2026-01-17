@@ -37,7 +37,10 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
         />
       )}
       <div className="flex flex-row gap-2.5">
-        <div className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5">
+        <div
+          className="z-20 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg ml-1.5 cursor-pointer hover:from-primary/90 hover:to-primary/70 transition-all"
+          onClick={() => navigate("/home")}
+        >
           <MessageCircle />
         </div>
         <div className="flex flex-col justify-center">

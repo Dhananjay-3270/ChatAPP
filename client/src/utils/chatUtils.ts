@@ -1,5 +1,6 @@
-import type { ChatUtilsChat } from "../types/chat";
+import type { ChatUtilsChat, Message } from "../types/chat";
 import type { ChatUser } from "../types/chat";
+import type { AdaptedMessage } from "../types/chat";
 // Define Member type locally if not exported from chat types
 interface Member {
     userName: string;
@@ -39,11 +40,11 @@ export const getOtherMembers = (userName: string, members: ChatUser[]): Member[]
  * @param chat - The chat object
  * @returns Display name for the chat or fallback
  */
-export const getChatDisplayName = (userName: string, chat: ChatUser[]|undefined): string => {
+export const getChatDisplayName = (userName: string, chat: ChatUser[] | undefined): string => {
     if (!chat) {
         return 'Unknown Chat';
     }
-    
+
     const otherMembers = getOtherMembers(userName, chat);
 
     if (!otherMembers || otherMembers.length === 0) {
@@ -116,3 +117,52 @@ export const getChatInitials = (userName: string, chat: ChatUtilsChat): string =
         })
         .join('');
 };
+
+
+function formatChatTimestamp(isoString: string) {
+    const date = new Date(isoString);
+
+    return date.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    });
+}
+
+// Interface for adapted message structure
+
+
+// Interface for message adapter function parameters
+export interface MessageAdapterParams {
+    messages: Message[];
+    userEmail: string;
+}
+
+/**
+ * Adapts raw messages to a standardized format for UI consumption
+ * @param messages - Array of raw messages from the API
+ * @param userEmail - Current user's email to determine message ownership
+ * @returns Array of adapted messages with standardized structure
+ */
+export const messageAdapter = (messages: Message[], userEmail: string): AdaptedMessage[] => {
+    if (!messages || !Array.isArray(messages) || !userEmail) {
+        return [];
+    }
+    return messages.map((message) => {
+        return {
+            id: message._id,
+            content: message.content,
+            sender: {
+                id: message.sender._id,
+                name: message.sender.userName,
+                email: message.sender.email
+            },
+            timestamp: formatChatTimestamp(message.createdAt),
+            direction: message.sender.email === userEmail ? 'outgoing' : 'incoming',
+            chatId: message.chat
+        }
+    });
+}

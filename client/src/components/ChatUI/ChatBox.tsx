@@ -3,15 +3,26 @@ import type { ChatBoxProps } from "../../types/chat";
 import { useEffect, useState } from "react";
 import { ChatService } from "../../services/ChatService";
 import { StatusCode } from "../../../core/utils/enum";
-import type { Message } from "../../types/chat";
+import type { Message, AdaptedMessage } from "../../types/chat";
 import ProfileAvatar from "../Profile";
-import { getChatDisplayName } from "../../utils/chatUtils";
+import { getChatDisplayName, messageAdapter } from "../../utils/chatUtils";
 import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
+
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[] | null>(null);
+  const [uiMessages, setUIMessages] = useState<AdaptedMessage[]>([]);
+
+  useEffect(() => {
+    if (messages && user?.email) {
+      const adaptedMessages = messageAdapter(messages, user.email);
+      setUIMessages(adaptedMessages);
+    } else {
+      setUIMessages([]);
+    }
+  }, [messages, user?.email]);
   const { selectedChat } = props;
   useEffect(() => {
     socket.emit("chat:join", {
@@ -38,17 +49,17 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   }, [selectedChat]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row p-2.5 bg-gray-300">
+    <div className="flex flex-col h-full">
+      <div className="flex-shrink-0 flex flex-row items-center p-2.5 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <ProfileAvatar
           name={getChatDisplayName(user?.userName || "", selectedChat?.members)}
           size="md"
         />
-        <div className="p-2.5 flex justify-center ">
+        <span className="ml-2.5">
           {getChatDisplayName(user?.userName || "", selectedChat?.members)}
-        </div>
+        </span>
       </div>
-      <MessageContainer />
+      <MessageContainer uiMessages={uiMessages} />
     </div>
   );
 };

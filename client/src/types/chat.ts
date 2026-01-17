@@ -86,3 +86,15 @@ export interface Message {
     updatedAt: string;
     __v: number;
 }
+export interface AdaptedMessage {
+    id: string;
+    content: string;
+    sender: {
+        id: string;
+        name: string;
+        email: string;
+    };
+    timestamp: string;
+    direction: string;
+    chatId: string;
+}
