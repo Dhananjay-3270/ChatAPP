@@ -9,7 +9,7 @@ import { getChatDisplayName, messageAdapter } from "../../utils/chatUtils";
 import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
-import { InputSearch } from "../InputSearch/InputSearch";
+import { MessageInput } from "../MessageInput/MessageInput";
 import { SendHorizonal } from "lucide-react";
 
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
@@ -63,13 +63,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       </div>
       <MessageContainer uiMessages={uiMessages} />
       <div className="flex-shrink-0 p-4 ">
-        <InputSearch
-          variant="default"
-          size="lg"
-          borderRadius="full"
-          rightIcon={<SendHorizonal />}
-          iconSize="md"
-        />
+        <MessageInput variant="default" size="sm" borderRadius="full" />
       </div>
     </div>
   );

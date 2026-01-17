@@ -6,7 +6,7 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
-  const { id, content, sender, timestamp, direction, chatId } = message;
+  const { content, timestamp, direction } = message;
 
   const baseClasses =
     "max-w-[65%] py-2 text-sm leading-relaxed break-words rounded-2xl flex flex-col";
