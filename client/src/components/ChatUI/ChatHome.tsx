@@ -8,14 +8,14 @@ const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/4 border-r">
+    <div className="flex h-full">
+      <div className="w-1/4 border-r h-full">
         <ChatList
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
         />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 h-full flex flex-col">
         {selectedChat ? (
           <ChatBox selectedChat={selectedChat} />
         ) : (

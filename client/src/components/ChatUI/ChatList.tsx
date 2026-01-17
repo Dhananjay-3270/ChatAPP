@@ -22,23 +22,23 @@ const ChatList: React.FC<ChatListProps> = (props) => {
   }, []);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row p-3.5 justify-around">
+    <div className="flex flex-col h-full">
+      <div className="flex-shrink-0 flex flex-row p-3.5 justify-around">
         Messages
         <div>
           <EllipsisVertical />
         </div>
       </div>
-      <div className="p-3.5 flex justify-center ">
+      <div className="flex-shrink-0 p-3.5 flex justify-center ">
         <InputSearch
           variant="default"
-          width="md"
+          width="lg"
           size="md"
           placeholder="Search people.."
           leftIcon={<Search />}
         />
       </div>
-      <div className="flex flex-col overflow-y-scroll">
+      <div className="flex-1 flex flex-col overflow-y-auto">
         {chats &&
           chats?.map((chat, index) => {
             return (

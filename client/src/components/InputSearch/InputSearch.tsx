@@ -6,6 +6,7 @@ interface InputSearchProps {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   width?: "sm" | "md" | "lg" | "full";
+  borderRadius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
   isLoading?: boolean;
   error?: boolean;
   errorMessage?: string;
@@ -18,8 +19,16 @@ interface InputSearchProps {
   label?: string;
 }
 const baseStyles =
-  "w-full rounded-lg focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
+  "w-full  focus:outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
 
+const radiusStyles = {
+  none: "rounded-none",
+  sm: "rounded-sm",
+  md: "rounded-md",
+  lg: "rounded-lg",
+  xl: "rounded-xl",
+  full: "rounded-full",
+};
 const variantStyles = {
   default:
     "border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-500",
@@ -60,6 +69,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
     iconSize = "sm",
     variant = "default",
     size = "md",
+    borderRadius = "lg",
     label,
     error = false,
     errorMessage,
@@ -80,10 +90,11 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
   // Input classes with icon padding
   const inputClasses = cn(
     baseStyles,
+    radiusStyles[borderRadius || "lg"], // default to l
     variantStyles[error ? "error" : variant],
     sizeStyles[size],
     leftIcon ? "pl-10" : "",
-    rightIcon ? "pr-10" : ""
+    rightIcon ? "pr-10" : "",
   );
 
   return (
@@ -104,7 +115,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         {leftIcon && (
           <div
             className={cn(
-              "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 cursor-pointer   "
+              "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 cursor-pointer   ",
             )}
           >
             {leftIcon}
@@ -128,7 +139,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
           <div
             className={cn(
               "absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none",
-              iconSizeStyle
+              iconSizeStyle,
             )}
           >
             {rightIcon}

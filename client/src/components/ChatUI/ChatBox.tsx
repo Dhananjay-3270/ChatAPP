@@ -9,6 +9,8 @@ import { getChatDisplayName, messageAdapter } from "../../utils/chatUtils";
 import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
+import { InputSearch } from "../InputSearch/InputSearch";
+import { SendHorizonal } from "lucide-react";
 
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { user } = useUser();
@@ -50,16 +52,25 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-shrink-0 flex flex-row items-center p-2.5 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex-shrink-0 flex flex-row items-center px-4 h-16 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <ProfileAvatar
           name={getChatDisplayName(user?.userName || "", selectedChat?.members)}
           size="md"
         />
-        <span className="ml-2.5">
+        <span className="ml-3 font-medium text-gray-900 dark:text-gray-100 truncate">
           {getChatDisplayName(user?.userName || "", selectedChat?.members)}
         </span>
       </div>
       <MessageContainer uiMessages={uiMessages} />
+      <div className="flex-shrink-0 p-4 ">
+        <InputSearch
+          variant="default"
+          size="lg"
+          borderRadius="full"
+          rightIcon={<SendHorizonal />}
+          iconSize="md"
+        />
+      </div>
     </div>
   );
 };
