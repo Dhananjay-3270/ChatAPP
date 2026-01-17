@@ -63,7 +63,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       </div>
       <MessageContainer uiMessages={uiMessages} />
       <div className="flex-shrink-0 p-4 ">
-        <MessageInput variant="default" size="sm" borderRadius="full" />
+        <MessageInput variant="default" size="md" borderRadius="full" />
       </div>
     </div>
   );
