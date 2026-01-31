@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { AuthService } from "../services/AuthService";
@@ -6,9 +6,23 @@ import { StatusCode } from "../../core/utils/enum";
 import { useUser } from "../Context/UserContext";
 import type { User } from "../Context/UserContext";
 import Button from "../components/Button";
+import { useLocation } from "react-router-dom";
+
 export const Login: React.FC = () => {
+  const { setisAuth, setuser, login } = useUser();
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/home";
   const navigate = useNavigate();
-  const { login } = useUser();
+  useEffect(() => {
+    const userDetails = localStorage.getItem("user");
+    if (userDetails) {
+      setisAuth(true);
+      setuser(JSON.parse(userDetails));
+      navigate(from, { replace: true });
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",

@@ -12,14 +12,10 @@ import { useUser } from "./Context/UserContext";
 import ChatHome from "./components/ChatUI/ChatHome";
 import { socket } from "./websocket/socket";
 import { useEffect } from "react";
+import { ProtectedRoute } from "./ProtectedRoute";
 const AppContent: React.FC = () => {
-  const { isAuth, setisAuth, setuser } = useUser();
+
   useEffect(() => {
-    const userDetails = localStorage.getItem("user");
-    if (userDetails) {
-      setisAuth(true);
-      setuser(JSON.parse(userDetails))
-    }
     socket.connect();
     socket.on("connect", () => {
       console.log("Client connected:", socket.id);
@@ -43,26 +39,14 @@ const AppContent: React.FC = () => {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          !isAuth ? (
-            <Navigate to="/login" replace />
-          ) : (
-            <Layout>
-              <Outlet />
-            </Layout>
-          )
-        }
-      >
-        <Route path="/home" element={<Home />} />
-        <Route path="/chathome" element={<ChatHome />} />
+      <Route path="/" element={<Outlet />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/chathome" element={<ChatHome />} />
+        </Route>
       </Route>
-      <Route
-        path="/login"
-        element={!isAuth ? <Login /> : <Navigate to="/home" replace />}
-      />
-      <Route path="/register" element={<Register />} />
     </Routes>
   );
 };

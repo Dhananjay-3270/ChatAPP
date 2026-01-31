@@ -35,7 +35,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       setUIMessages((prev) => [...prev, message]);
     }
 
-    console.log(response.status);
   };
 
   const handleInputMessageChange = (
