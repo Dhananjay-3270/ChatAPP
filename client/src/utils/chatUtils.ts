@@ -165,3 +165,24 @@ export const messageAdapter = (messages: Message[], userEmail: string): AdaptedM
         }
     });
 }
+
+
+export const SingleMessageAdapter = (message: Message, userEmail: string): AdaptedMessage => {
+
+    return {
+        id: message._id,
+        content: message.content,
+        sender: {
+            id: message.sender._id,
+            name: message.sender.userName,
+            email: message.sender.email
+        },
+        timestamp: formatChatTimestamp(message.createdAt),
+        direction: message.sender.email === userEmail ? 'outgoing' : 'incoming',
+        chatId: message.chat
+    }
+
+}
+
+
+

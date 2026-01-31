@@ -5,7 +5,7 @@ interface MessageBubbleProps {
   message: AdaptedMessage;
 }
 
-export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
+export const MessageBubble: React.FC<MessageBubbleProps> = ({ message  }) => {
   const { content, timestamp, direction } = message;
 
   const baseClasses =

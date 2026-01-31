@@ -4,7 +4,7 @@ const Message = require("../models/message");
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find({ email: { $ne: req.user.email } }).select(
-      "fullName userName _id"
+      "fullName userName _id",
     );
     res.status(200).json({ data: allUsers });
   } catch (error) {
@@ -25,7 +25,12 @@ const sendMessage = async (req, res) => {
     chat: chatId,
   });
   await Chat.findByIdAndUpdate(chatId, { latestMessage: message._id });
-  res.status(200).json({ data: message });
+  // Populate sender in the response for consistency
+  const populatedMessage = await Message.findById(message._id).populate(
+    "sender",
+    "status fullName userName email _id",
+  );
+  res.status(200).json({ data: populatedMessage });
 };
 
 module.exports = { getAllUsers, sendMessage };

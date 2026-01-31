@@ -11,7 +11,7 @@ const MessageContainer: React.FC<MessageContainerProps> = ({ uiMessages }) => {
   return (
     <div className="flex-1 min-h-0 w-full bg-cover bg-center bg-no-repeat overflow-y-auto p-4 flex flex-col gap-2">
       {uiMessages.map((message) => (
-        <MessageBubble key={message.id} message={message} />
+        <MessageBubble key={message.id} message={message}  />
       ))}
     </div>
   );

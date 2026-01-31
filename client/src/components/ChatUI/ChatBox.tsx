@@ -10,7 +10,7 @@ import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
 import { MessageInput } from "../MessageInput/MessageInput";
-
+import { SingleMessageAdapter } from "../../utils/chatUtils";
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { selectedChat } = props;
 
@@ -21,11 +21,21 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   const handleMessageSend = async () => {
     if (!inputMessage || !selectedChat) return;
+
     const response = await ChatService.sendMessage(
       inputMessage,
       selectedChat._id,
     );
-    console.log(response);
+    if (response.status === StatusCode.OK) {
+      const message = SingleMessageAdapter(
+        response?.data as Message,
+        user?.email || "",
+      );
+      setInputMessage("");
+      setUIMessages((prev) => [...prev, message]);
+    }
+
+    console.log(response.status);
   };
 
   const handleInputMessageChange = (
