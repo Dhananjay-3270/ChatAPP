@@ -13,7 +13,7 @@ import { MessageInput } from "../MessageInput/MessageInput";
 
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { selectedChat } = props;
- 
+
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [uiMessages, setUIMessages] = useState<AdaptedMessage[]>([]);
@@ -25,10 +25,12 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       inputMessage,
       selectedChat._id,
     );
-  console.log(response)
+    console.log(response);
   };
 
-  const handleInputMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputMessageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setInputMessage(event.target.value);
   };
 

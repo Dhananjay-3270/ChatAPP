@@ -1,7 +1,10 @@
 import type React from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 import { Smile, Send } from "lucide-react";
+import data from "@emoji-mart/data";
+
+import EmojiPicker from "@emoji-mart/react";
 
 interface MessageInputProps {
   variant: "default" | "filled" | "outlined" | "ghost";
@@ -95,20 +98,52 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
   );
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const textAreaRef = useRef(null);
+  function insertAtCursor(textarea: HTMLTextAreaElement, value: string) {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    const text = textarea.value;
+    textarea.value = text.substring(0, start) + value + text.substring(end);
+
+    textarea.selectionStart = textarea.selectionEnd = start + value.length;
+
+    textarea.focus();
+  }
+  const handleEmojiSelect = (emoji: any) => {
+    if (!textAreaRef.current) return;
+    insertAtCursor(textAreaRef.current, emoji.native);
+  };
 
   return (
-    <div className={containerClasses}>
-      <input
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={inputClasses}
-      />
-      <Smile
-        className={iconClasses}
-        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-      />
-      <Send className={iconClasses} onClick={handleMessageSend} />
+    <div className="relative">
+      {showEmojiPicker && (
+        <div className="z-10 sticky">
+          <EmojiPicker
+            data={data}
+            onEmojiSelect={handleEmojiSelect}
+            theme="light"
+            previewPosition="none"
+            skinTonePosition="none"
+          />
+        </div>
+      )}
+      <div className={containerClasses}>
+        <input
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className={inputClasses}
+          ref={textAreaRef}
+        />
+
+        <Smile
+          className={iconClasses}
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        />
+
+        <Send className={iconClasses} onClick={handleMessageSend} />
+      </div>
     </div>
   );
 };
