@@ -7,6 +7,6 @@ export const Apiendpoints = {
     getStatus: '/api/status/',
     updateStatus: '/api/status/updateStatus',
     getChats: '/api/chat/chats',
-    getAllMessages: (chatId: string) => `/api/chat/${chatId}`
-
+    getAllMessages: (chatId: string) => `/api/chat/${chatId}`,
+    sendMessage: '/api/message/sendMessage'
 }

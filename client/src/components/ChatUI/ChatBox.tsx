@@ -10,12 +10,27 @@ import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
 import { MessageInput } from "../MessageInput/MessageInput";
-import { SendHorizonal } from "lucide-react";
 
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
+  const { selectedChat } = props;
+ 
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [uiMessages, setUIMessages] = useState<AdaptedMessage[]>([]);
+  const [inputMessage, setInputMessage] = useState("");
+
+  const handleMessageSend = async () => {
+    if (!inputMessage || !selectedChat) return;
+    const response = await ChatService.sendMessage(
+      inputMessage,
+      selectedChat._id,
+    );
+  console.log(response)
+  };
+
+  const handleInputMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputMessage(event.target.value);
+  };
 
   useEffect(() => {
     if (messages && user?.email) {
@@ -25,7 +40,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       setUIMessages([]);
     }
   }, [messages, user?.email]);
-  const { selectedChat } = props;
+
   useEffect(() => {
     socket.emit("chat:join", {
       chatId: selectedChat?._id,
@@ -63,7 +78,14 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       </div>
       <MessageContainer uiMessages={uiMessages} />
       <div className="flex-shrink-0 p-4 ">
-        <MessageInput variant="default" size="md" borderRadius="full" />
+        <MessageInput
+          variant="default"
+          size="md"
+          borderRadius="full"
+          value={inputMessage}
+          onChange={handleInputMessageChange}
+          handleMessageSend={handleMessageSend}
+        />
       </div>
     </div>
   );

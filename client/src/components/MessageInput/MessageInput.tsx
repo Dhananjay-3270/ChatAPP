@@ -10,6 +10,7 @@ interface MessageInputProps {
   borderRadius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleMessageSend?: (e: React.MouseEvent<SVGSVGElement>) => void;
   iconSize?: "sm" | "md" | "lg";
   label?: string;
   value?: string;
@@ -25,6 +26,7 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
     value,
     placeholder = "Type a message...",
     iconSize = "md",
+    handleMessageSend,
   } = props;
 
   // Container styles
@@ -106,13 +108,7 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
         className={iconClasses}
         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
       />
-      <Send
-        className={iconClasses}
-        onClick={() => {
-          // Handle send message logic here
-          console.log("Send message:", value);
-        }}
-      />
+      <Send className={iconClasses} onClick={handleMessageSend} />
     </div>
   );
 };

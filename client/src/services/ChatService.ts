@@ -15,7 +15,7 @@ export class ChatService {
 
             })
     }
-    static getAllMessages = (chatId) => {
+    static getAllMessages = (chatId: string) => {
         return NetworkManager.getInstance().appRequest(
             {
                 method: HttpMethod.GET,
@@ -23,6 +23,18 @@ export class ChatService {
 
 
             })
+    }
+    static sendMessage = (message: string, chatId: string) => {
+        return NetworkManager.getInstance().appRequest(
+            {
+                method: HttpMethod.POST,
+                url: Apiendpoints.sendMessage,
+                data: JSON.stringify({
+                    chatId: chatId,
+                    content: message
+                })
+            })
+
     }
 
 
