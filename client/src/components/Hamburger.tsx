@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { UserPen, Settings, LogOut, MessageCircle, Moon, Sun } from "lucide-react";
+import {
+  UserPen,
+  Settings,
+  LogOut,
+  MessageCircle,
+  Moon,
+  Sun,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
 import { AuthService } from "../services/AuthService";

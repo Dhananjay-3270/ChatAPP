@@ -74,7 +74,7 @@ const Home: React.FC = () => {
 
   const handleStatusUpdate = (
     state: "online" | "offline" | "away" | "busy",
-    description: string
+    description: string,
   ) => {
     setIsStatusEdited(true);
     setStatus({ state, description });
