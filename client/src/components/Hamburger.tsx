@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { UserPen, Settings, LogOut, MessageCircle } from "lucide-react";
+import { UserPen, Settings, LogOut, MessageCircle, Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../hooks/useTheme";
 import { AuthService } from "../services/AuthService";
 import { StatusCode } from "../../core/utils/enum";
 import { useUser } from "../Context/UserContext";
@@ -14,6 +15,7 @@ interface Hamburgerprops {
 export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
   const { user, logout } = useUser();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [profiletoggle, setProfileToggle] = useState(false);
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +72,18 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
         {profiletoggle && (
           <div className="absolute top-10 right-0 w-44 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-40 p-3 flex flex-col gap-2 border border-gray-200 dark:border-gray-600">
             <button
-              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition"
+              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition cursor-pointer"
+              onClick={toggleTheme}
+            >
+              {theme === "dark" ? (
+                <Sun className="text-yellow-500" size={20} />
+              ) : (
+                <Moon className="text-gray-700" size={20} />
+              )}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition cursor-pointer"
               onClick={() => setProfileToggle(false)}
             >
               <Settings
@@ -80,7 +93,7 @@ export const Hamburger: React.FC<Hamburgerprops> = ({ open, setOpen }) => {
               Settings
             </button>
             <button
-              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition"
+              className="flex items-center gap-2 px-3 py-2 rounded hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition cursor-pointer"
               onClick={handleLogout}
             >
               <LogOut className="text-red-500 dark:text-red-400" size={20} />

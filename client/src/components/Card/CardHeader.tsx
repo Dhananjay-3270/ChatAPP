@@ -23,8 +23,8 @@ const CardHeader: React.FC<CardHeaderProps> = (props) => {
     <div className={`card-header ${alignment ? alignment : ""}`}>
       <div className="header-content">
         <div className="header-main flex gap-4.5 ">
-          {icon && <div className="header-icon">{icon}</div>}
-          <div className="font-medium">{title}</div>
+          {icon && <div className="header-icon text-gray-700 dark:text-gray-300">{icon}</div>}
+          <div className="font-medium text-gray-900 dark:text-gray-100">{title}</div>
         </div>
       </div>
       {children}

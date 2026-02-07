@@ -122,7 +122,7 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
           <EmojiPicker
             data={data}
             onEmojiSelect={handleEmojiSelect}
-            theme="light"
+            theme="auto"
             previewPosition="none"
             skinTonePosition="none"
           />

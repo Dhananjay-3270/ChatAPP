@@ -15,8 +15,8 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
     <div
       className={`flex flex-row  h-16 p-2.5 gap-2.5 cursor-pointer transition-colors rounded-lg ${
         isSelected
-          ? "bg-primary/10 border border-primary/20"
-          : "hover:bg-accent/50"
+          ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+          : "hover:bg-gray-100 dark:hover:bg-gray-800"
       }`}
       onClick={() => onClick(chat)}
     >
@@ -25,15 +25,15 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
         size="sm"
       />
       <div className="flex-1 flex-col">
-        <p className="font-medium truncate">
+        <p className="font-medium truncate text-gray-900 dark:text-gray-100">
           {getChatDisplayName(user?.userName || "", chat?.members)}
         </p>
         <div className="flex justify-between items-end">
-          <p className="text-sm text-muted-foreground truncate leading-tight flex-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 truncate leading-tight flex-1">
             {chat?.latestMessage?.content}
           </p>
           {chat?.latestMessage && (
-            <div className="text-xs text-muted-foreground ml-2">
+            <div className="text-xs text-gray-500 dark:text-gray-400 ml-2">
               {new Date(chat.latestMessage.createdAt).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",

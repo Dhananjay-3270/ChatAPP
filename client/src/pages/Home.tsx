@@ -84,10 +84,10 @@ const Home: React.FC = () => {
       <div className="flex flex-row  h-full">
         <div className="flex-[0_0_70%]">
           <div className="flex flex-col items-start justify-start h-44 w-full mt-5 bg-gradient-to-r from-gray-200 to-white dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6">
-            <h2 className="text-2xl font-semibold mb-2">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
               {greeting()} {user?.fullName}
             </h2>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
               You have 4 unread messages and 2 new group invitations.
             </p>
             <Button to="/chathome" as="link">
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
             </Button>
           </div>
           <div className="mt-5">
-            <h3 className="text-lg font-semibold mb-4 text-left pl-5">
+            <h3 className="text-lg font-semibold mb-4 text-left pl-5 text-gray-900 dark:text-gray-100">
               Quick Actions
             </h3>
             <div className="grid grid-cols-3 gap-4">
@@ -118,14 +118,14 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col mt-5 mr-5 w-dvw p-5">
-          <div className=" border border-gray-300 rounded-lg h-1/2">
-            <div className="flex flex-row justify-between">
+          <div className="border border-gray-300 dark:border-gray-600 rounded-lg h-1/2">
+            <div className="flex flex-row justify-between text-gray-900 dark:text-gray-100">
               <h1>Recent Chats </h1>
               <Plus />
             </div>
-            <div className="">Coming Soon</div>
+            <div className="text-gray-500 dark:text-gray-400">Coming Soon</div>
           </div>
-          <div className=" border border-gray-300 rounded-lg h-1/2 mt-5">
+          <div className="border border-gray-300 dark:border-gray-600 rounded-lg h-1/2 mt-5">
             <StatusComponent
               status={status}
               handleStatusUpdate={handleStatusUpdate}

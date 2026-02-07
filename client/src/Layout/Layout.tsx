@@ -7,7 +7,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [menuOpen, setMenu] = useState(false);
   return (
-    <div className="flex flex-col h-svh overflow-hidden">
+    <div className="flex flex-col h-svh overflow-hidden bg-white dark:bg-gray-900">
       <Hamburger open={menuOpen} setOpen={setMenu} />
       <div className="flex-1 overflow-hidden">{children}</div>
     </div>

@@ -92,7 +92,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-shrink-0 flex flex-row items-center px-4 h-16 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex-shrink-0 flex flex-row items-center px-4 h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <ProfileAvatar
           name={getChatDisplayName(user?.userName || "", selectedChat?.members)}
           size="md"

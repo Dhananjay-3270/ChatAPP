@@ -13,7 +13,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message  }) => {
 
   const directionClass =
     direction === "incoming"
-      ? "self-start bg-gray-100 text-gray-900 rounded-tl-sm pl-3 pr-2"
+      ? "self-start bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-tl-sm pl-3 pr-2"
       : "self-end bg-blue-600 text-white rounded-tr-sm pl-2 pr-3";
 
   const styles = cn(baseClasses, directionClass);

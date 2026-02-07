@@ -8,8 +8,8 @@ const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
 
   return (
-    <div className="flex h-full">
-      <div className="w-1/4 border-r h-full">
+    <div className="flex h-full bg-white dark:bg-gray-900">
+      <div className="w-1/4 border-r border-gray-200 dark:border-gray-700 h-full">
         <ChatList
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}

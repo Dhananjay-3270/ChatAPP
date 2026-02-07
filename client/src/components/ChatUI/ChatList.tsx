@@ -22,10 +22,10 @@ const ChatList: React.FC<ChatListProps> = (props) => {
   }, []);
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-shrink-0 flex flex-row p-3.5 justify-around">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-900">
+      <div className="flex-shrink-0 flex flex-row p-3.5 justify-around text-gray-900 dark:text-gray-100">
         Messages
-        <div>
+        <div className="text-gray-600 dark:text-gray-400">
           <EllipsisVertical />
         </div>
       </div>
