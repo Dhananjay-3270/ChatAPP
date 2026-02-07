@@ -13,7 +13,7 @@ interface MessageInputProps {
   borderRadius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleMessageSend?: (e: React.MouseEvent<SVGSVGElement>) => void;
+  handleMessageSend?: () => void;
   iconSize?: "sm" | "md" | "lg";
   label?: string;
   value?: string;
@@ -135,6 +135,12 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
           placeholder={placeholder}
           className={inputClasses}
           ref={textAreaRef}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              handleMessageSend?.();
+            }
+          }}
         />
 
         <Smile
@@ -142,7 +148,7 @@ export const MessageInput: React.FC<MessageInputProps> = (props) => {
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         />
 
-        <Send className={iconClasses} onClick={handleMessageSend} />
+        <Send className={iconClasses} onClick={() => handleMessageSend?.()} />
       </div>
     </div>
   );

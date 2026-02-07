@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const secretkey = process.env.JWT_SECRET;
 
@@ -11,7 +12,7 @@ const login = async (req, res) => {
     if (!existingUser) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-    const isMatch = password === existingUser.password;
+    const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid Password" });
     }
@@ -20,10 +21,9 @@ const login = async (req, res) => {
       {
         userId: existingUser._id,
         email: existingUser.email,
-        password: existingUser.password,
         role: existingUser.role,
       },
-      secretkey
+      secretkey,
     );
     res.cookie("authcookie", token, {
       maxAge: 900000,
@@ -36,7 +36,7 @@ const login = async (req, res) => {
       {
         "status.state": existingUser.status.state,
         "status.description": existingUser.status.description || "Available",
-      }
+      },
     );
     const user = {
       fullName: existingUser.fullName,
@@ -63,11 +63,14 @@ const register = async (req, res) => {
         .status(400)
         .json({ error: "Username or Email already exists." });
     }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       fullName,
       userName,
       email,
-      password,
+      password: hashedPassword,
       age,
     });
 

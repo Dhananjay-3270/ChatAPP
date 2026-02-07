@@ -36,7 +36,7 @@ export const Register: React.FC = () => {
     e.preventDefault();
     try {
       const response = await AuthService.register(formData);
-      if (response.status === StatusCode.OK) {
+      if (response.status === StatusCode.CREATED) {
         navigate("/login");
       }
     } catch (error) {

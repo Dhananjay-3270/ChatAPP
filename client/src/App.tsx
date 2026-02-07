@@ -5,12 +5,14 @@ import { Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { UserContextProvider } from "./Context/UserContext";
+import { UserContextProvider, useUser } from "./Context/UserContext";
 import ChatHome from "./components/ChatUI/ChatHome";
 import { socket } from "./websocket/socket";
 import { useEffect } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
+
 const AppContent: React.FC = () => {
+  const { isAuth } = useUser();
   useEffect(() => {
     socket.connect();
     socket.on("connect", () => {
@@ -31,7 +33,7 @@ const AppContent: React.FC = () => {
       socket.off("connect");
       socket.off("disconnect");
     };
-  }, []);
+  }, [isAuth]);
 
   return (
     <Routes>

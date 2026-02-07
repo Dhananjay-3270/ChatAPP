@@ -159,7 +159,7 @@ function socketHandler(io) {
           "status fullName userName email _id",
         );
 
-          io.to(`chat:${chatId}`).emit("message:new", populatedMessage);
+        io.to(`chat:${chatId}`).emit("message:new", populatedMessage);
         /* 7️⃣ Emit to user rooms (chat list updates) */
         chat.members.forEach((memberId) => {
           io.to(`user:${memberId}`).emit("chat:updated", {
