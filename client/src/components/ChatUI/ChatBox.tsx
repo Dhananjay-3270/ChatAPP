@@ -21,20 +21,24 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
 
   const handleMessageSend = async () => {
     if (!inputMessage || !selectedChat) return;
-
-    const response = await ChatService.sendMessage(
+    socket.emit("message:send", {
+      chatId: selectedChat._id,
       inputMessage,
-      selectedChat._id,
-    );
-    if (response.status === StatusCode.OK) {
-      const message = SingleMessageAdapter(
-        response?.data as Message,
-        user?.email || "",
-      );
-      setInputMessage("");
-      setUIMessages((prev) => [...prev, message]);
-    }
+    });
 
+    // const response = await ChatService.sendMessage(
+    //   inputMessage,
+    //   selectedChat._id,
+    // );
+    // if (response.status === StatusCode.OK) {
+    //   const message = SingleMessageAdapter(
+    //     response?.data as Message,
+    //     user?.email || "",
+    //   );
+    //   setInputMessage("");
+    //   setUIMessages((prev) => [...prev, message]);
+    // }
+    /// Removed the REST API call method
   };
 
   const handleInputMessageChange = (
@@ -57,14 +61,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       chatId: selectedChat?._id,
     });
 
-    return () => {
-      socket.emit("chat:leave", {
-        chatId: selectedChat?._id,
-      });
-    };
-  }, []);
-
-  useEffect(() => {
     const getAllMessages = async () => {
       if (selectedChat) {
         const response = await ChatService.getAllMessages(selectedChat?._id);
@@ -74,7 +70,25 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       }
     };
     getAllMessages();
+
+    return () => {
+      socket.emit("chat:leave", {
+        chatId: selectedChat?._id,
+      });
+    };
   }, [selectedChat]);
+
+  useEffect(() => {
+    const handleNewMessage = (payload: Message) => {
+      const message = SingleMessageAdapter(
+        payload as Message,
+        user?.email || "",
+      );
+      setInputMessage("");
+      setUIMessages((prev) => [...prev, message]);
+    };
+    socket.on("message:new", handleNewMessage);
+  }, [socket, selectedChat?._id]);
 
   return (
     <div className="flex flex-col h-full">

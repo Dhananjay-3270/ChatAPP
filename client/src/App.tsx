@@ -1,20 +1,16 @@
 import "./App.css";
 import { Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
-import { Layout } from "./Layout/Layout";
 import { Outlet } from "react-router-dom";
 import Home from "./pages/Home";
-import { Navigate } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { UserContextProvider } from "./Context/UserContext";
-import { useUser } from "./Context/UserContext";
 import ChatHome from "./components/ChatUI/ChatHome";
 import { socket } from "./websocket/socket";
 import { useEffect } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
 const AppContent: React.FC = () => {
-
   useEffect(() => {
     socket.connect();
     socket.on("connect", () => {
