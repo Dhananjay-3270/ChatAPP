@@ -1,4 +1,4 @@
-import type { ChatUtilsChat, Message } from "../types/chat";
+import type {  Message } from "../types/chat";
 import type { ChatUser } from "../types/chat";
 import type { AdaptedMessage } from "../types/chat";
 // Define Member type locally if not exported from chat types
@@ -86,7 +86,7 @@ export const getLatestMessage = () => {
  * @param chat - The chat object
  * @returns Initials string for avatar
  */
-export const getChatInitials = (userName: string, chat: ChatUtilsChat): string => {
+export const getChatInitials = (userName: string, chat: ChatUser[]): string => {
     const otherMembers = getOtherMembers(userName, chat);
 
     if (!otherMembers || otherMembers.length === 0) {
