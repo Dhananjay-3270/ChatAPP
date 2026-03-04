@@ -28,7 +28,9 @@ const login = async (req, res) => {
     res.cookie("authcookie", token, {
       maxAge: 900000,
       httpOnly: true,
-      sameSite: "lax", // or 'none' if using HTTPS
+      sameSite: "lax",
+      domain: onrender.com,
+      // or 'none' if using HTTPS
       // secure: true, // uncomment if using HTTPS
     }); // Update user status to online
     await User.updateOne(
