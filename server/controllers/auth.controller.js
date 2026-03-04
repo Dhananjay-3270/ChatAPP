@@ -29,6 +29,7 @@ const login = async (req, res) => {
       maxAge: 900000,
       httpOnly: true,
       sameSite: "none",
+      secure: true,
       // or 'none' if using HTTPS
       // secure: true, // uncomment if using HTTPS
     }); // Update user status to online
