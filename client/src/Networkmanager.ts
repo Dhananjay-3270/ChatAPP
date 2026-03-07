@@ -31,8 +31,8 @@ apiClient.interceptors.response.use(
     (error) => {
 
         if (error?.response?.status === StatusCode.UNAUTHORIZED) {
-            // localStorage.removeItem('user');
-            // window.location.href = window.location.origin + '/login';
+            localStorage.removeItem('user');
+            window.location.href = window.location.origin + '/login';
             //disabled for testing
             return Promise.reject({ ...error.response });
         } else {

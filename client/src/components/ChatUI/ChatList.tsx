@@ -1,25 +1,15 @@
 import type React from "react";
-import { useEffect, useState } from "react";
-import { ChatService } from "../../services/ChatService";
-import { StatusCode } from "../../../core/utils/enum";
 import { EllipsisVertical, Search } from "lucide-react";
 import { InputSearch } from "../InputSearch/InputSearch";
 import ChatListItem from "./ChatListItem";
 import type { ChatListProps, ChatItem } from "../../types/chat";
+import { useChatFetch } from "../../hooks/useChatFetch";
 
 const ChatList: React.FC<ChatListProps> = (props) => {
   const { selectedChat, setSelectedChat } = props;
-  const [chats, setChats] = useState<ChatItem[] | null>(null);
+  // const [chats, setChats] = useState<ChatItem[] | null>(null);
 
-  useEffect(() => {
-    const getChats = async () => {
-      const chats = await ChatService.getChats();
-      if (chats.status === StatusCode.OK) {
-        setChats(chats.data as ChatItem[]);
-      }
-    };
-    getChats();
-  }, []);
+  const { data: chats, isLoading } = useChatFetch<ChatItem[] | null>("chats");
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-gray-900">

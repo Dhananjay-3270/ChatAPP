@@ -6,14 +6,13 @@ import { Apiendpoints } from "./Endpoints";
 
 
 export class ChatService {
-    static getChats = () => {
-        return NetworkManager.getInstance().appRequest(
+    static getChats = async () => {
+        const response = await NetworkManager.getInstance().appRequest(
             {
                 method: HttpMethod.GET,
                 url: Apiendpoints.getChats,
-
-
             })
+        return await response.data
     }
     static getAllMessages = (chatId: string) => {
         return NetworkManager.getInstance().appRequest(
