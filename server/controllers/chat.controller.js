@@ -41,7 +41,7 @@ const getMessages = async (req, res) => {
   }
 
   const isMember = chat.members.some(
-    (memberId) => memberId.toString() === userA.toString()
+    (memberId) => memberId.toString() === userA.toString(),
   );
   if (!isMember) {
     return res.status(403).json({ message: "Access denied" });
@@ -52,7 +52,10 @@ const getMessages = async (req, res) => {
     .sort({ createdAt: 1 }); // oldest to newest
 
   // Step 3: Return
-  res.status(200).json({ data: messages });
+  res.status(200).json({
+    message: "Messages retrieved successfully",
+    data: messages,
+  });
 };
 const getAllChats = async (req, res) => {
   try {
@@ -69,7 +72,10 @@ const getAllChats = async (req, res) => {
       .sort({ updatedAt: -1 })
       .lean();
 
-    return res.status(200).json({ data: chats });
+    return res.status(200).json({
+      message: "Chats retrieved successfully",
+      data: chats,
+    });
   } catch (err) {
     console.error("getAllChats error:", err);
     return res.status(500).json({ error: "Failed to fetch chats" });
