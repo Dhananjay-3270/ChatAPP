@@ -34,8 +34,8 @@ const ChatList: React.FC<ChatListProps> = (props) => {
           variant="default"
           width="lg"
           size="md"
-          placeholder="Search people.."
-          leftIcon={<Search />}
+          placeholder="Search people & Chats"
+          rightIcon={<Search />}
         />
       </div>
       <div className="flex-1 flex flex-col overflow-y-auto">
