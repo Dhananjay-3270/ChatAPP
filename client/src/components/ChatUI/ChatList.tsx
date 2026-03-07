@@ -7,9 +7,8 @@ import { useChatFetch } from "../../hooks/useChatFetch";
 
 const ChatList: React.FC<ChatListProps> = (props) => {
   const { selectedChat, setSelectedChat } = props;
-  // const [chats, setChats] = useState<ChatItem[] | null>(null);
 
-  const { data: chats, isLoading } = useChatFetch<ChatItem[] | null>("chats");
+  const { data: chats } = useChatFetch<ChatItem[] | null>("chats");
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-gray-900">
