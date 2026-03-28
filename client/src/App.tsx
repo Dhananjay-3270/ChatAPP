@@ -10,10 +10,7 @@ import ChatHome from "./components/ChatUI/ChatHome";
 import { socket } from "./websocket/socket";
 import { useEffect } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const AppContent: React.FC = () => {
   const { isAuth } = useUser();
@@ -60,6 +57,7 @@ const App: React.FC = () => {
       queries: {
         refetchOnWindowFocus: false,
         gcTime: 600000, // 10 mins
+        staleTime: 0,
       },
     },
   });
