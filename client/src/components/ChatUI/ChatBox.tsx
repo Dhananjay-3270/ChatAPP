@@ -10,11 +10,15 @@ import { useUser } from "../../Context/UserContext";
 import MessageContainer from "./MessageContainer";
 import { socket } from "../../websocket/socket";
 import { MessageInput } from "../MessageInput/MessageInput";
+// import { useGetMessages } from "../../hooks/useGetMessages";
 import { SingleMessageAdapter } from "../../utils/chatUtils";
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { selectedChat } = props;
 
   const { user } = useUser();
+  //   const { data: messages } = useGetMessages("selectedChat", selectedChat?._id, {
+  //   enabled: !!selectedChat,
+  // }); tanStack Query
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [uiMessages, setUIMessages] = useState<AdaptedMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
