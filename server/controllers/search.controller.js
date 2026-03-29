@@ -7,7 +7,7 @@ const search = async (req, res) => {
   const users = await User.find({
     userName: { $regex: query, $options: "i" },
     _id: { $ne: userA },
-  }).select("_id");
+  });
   let userIds;
   if (users) {
     userIds = users.map((user) => {
@@ -15,15 +15,26 @@ const search = async (req, res) => {
       return id;
     });
   }
-  console.log(userA);
+  //   console.log(userA);
   //   console.log(users);
   userIds.map((user) => console.log(user));
   const chats = await Chat.find({
     $or: userIds.map((user) => ({ members: { $all: [userA, user] } })),
   });
-  console.log(chats);
-
-  res.status(200).json({ Succes: users });
+  if (chats && chats.length > 0) {
+    const data = {
+      resultType: "chats",
+      data: chats,
+    };
+    res
+      .status(200)
+      .json({ message: "Chats retrieved successfully", data: data });
+  }
+  const data = {
+    resultType: "users",
+    data: users,
+  };
+  res.status(200).json({ message: "Users retrieved successfully", data: data });
 };
 
 module.exports = { search };
