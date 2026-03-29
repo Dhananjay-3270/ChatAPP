@@ -47,8 +47,9 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields
-  }
+  },
 );
-
+userSchema.index({ fullName: 1 });
+userSchema.index({ userName: 1 });
 const User = mongoose.model("User", userSchema);
 module.exports = User;
