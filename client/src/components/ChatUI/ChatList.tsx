@@ -5,6 +5,7 @@ import ChatListItem from "./ChatListItem";
 import type { ChatListProps, SearchResult } from "../../types/chat";
 import { useChatFetch } from "../../hooks/useChatFetch";
 import { useState } from "react";
+import { ChatService } from "../../services/ChatService";
 
 const ChatList: React.FC<ChatListProps> = (props) => {
   const [search, setSearch] = useState("");
@@ -14,11 +15,18 @@ const ChatList: React.FC<ChatListProps> = (props) => {
     setSearch(event.target.value);
   };
 
+  const getChatAcess = async (data) => {
+    const userEmail = data.email;
+    const response = await ChatService.createChat(userEmail);
+    const chat = response.data;
+    setSelectedChat(chat);
+  };
+
   const { data: result } = useChatFetch<SearchResult | null>(
     ["chats", `${search}`],
     search,
   );
-  console.log(result);
+
   return (
     <div className="flex flex-col h-full bg-white dark:bg-gray-900">
       <div className="flex-shrink-0 flex flex-row p-3.5 justify-around text-gray-900 dark:text-gray-100">
@@ -53,7 +61,7 @@ const ChatList: React.FC<ChatListProps> = (props) => {
                 onClick={
                   result.resultType === "chats"
                     ? (data) => setSelectedChat(data)
-                    : () => console.log("first")
+                    : (data) => getChatAcess(data)
                 }
               />
             );

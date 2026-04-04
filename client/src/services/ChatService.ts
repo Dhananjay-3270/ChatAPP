@@ -35,6 +35,16 @@ export class ChatService {
             })
 
     }
+    static createChat = (email: string) => {
+        return NetworkManager.getInstance().appRequest(
+            {
+                method: HttpMethod.POST,
+                url: Apiendpoints.createChat,
+                data: JSON.stringify({
+                    email: email
+                })
+            })
+    }
 
 
 } 

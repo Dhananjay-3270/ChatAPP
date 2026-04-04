@@ -7,6 +7,7 @@ export const Apiendpoints = {
     getStatus: '/api/status/',
     updateStatus: '/api/status/updateStatus',
     getChats: (search: string) => `/api/chat/chats?query=${search}`,
+    createChat: '/api/chat/access',
     getAllMessages: (chatId: string) => `/api/chat/${chatId}`,
     sendMessage: '/api/message/sendMessage',
     search: (search: string) => `/api/search/combine?query=${search}`

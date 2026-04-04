@@ -10,7 +10,6 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
   type,
   isSelected,
 }) => {
-  console.log(type);
   const { user } = useUser();
 
   const isChat = (item: Chat | User): item is Chat => {
@@ -68,11 +67,12 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                 ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
                 : "hover:bg-gray-100 dark:hover:bg-gray-800"
             }`}
+            onClick={() => onClick?.(data)}
           >
             <ProfileAvatar name={user?.userName || ""} size="sm" />
             <div className="flex-1 flex-col">
               <p className="font-medium truncate text-gray-900 dark:text-gray-100">
-                {user?.userName || ""}
+                {data?.userName || ""}
               </p>
               {/* <div className="flex justify-between items-end">
               <p className="text-sm text-gray-500 dark:text-gray-400 truncate leading-tight flex-1">
