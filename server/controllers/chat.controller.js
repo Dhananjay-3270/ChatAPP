@@ -60,25 +60,68 @@ const getMessages = async (req, res) => {
 const getAllChats = async (req, res) => {
   try {
     const userA = req.user.userId;
+    const { query } = req.query;
     // const userA = await User.findOne({ email: userEmail }).select("_id");
     if (!userA) return res.status(404).json({ error: "User not found" });
 
-    const chats = await Chat.find({ members: userA })
-      .populate("members", "fullName userName avatar")
-      .populate({
-        path: "latestMessage",
-        populate: { path: "sender", select: "fullName userName avatar" },
-      })
-      .sort({ updatedAt: -1 })
-      .lean();
+    if (!query || query.trim() === "") {
+      try {
+        const chats = await Chat.find({ members: userA })
+          .populate("members", "fullName userName ")
+          .populate({
+            path: "latestMessage",
+            populate: { path: "sender", select: "fullName userName avatar" },
+          })
+          .sort({ updatedAt: -1 })
+          .lean();
 
-    return res.status(200).json({
-      message: "Chats retrieved successfully",
-      data: chats,
-    });
+        return res.status(200).json({
+          message: "Chats retrieved successfully",
+          data: { resultType: "chats", data: chats },
+        });
+      } catch (err) {
+        console.error("getAllChats error:", err);
+        return res.status(500).json({ error: "Failed to fetch chats" });
+      }
+    }
+
+    try {
+      const users = await User.find({
+        userName: { $regex: query, $options: "i" },
+        _id: { $ne: userA },
+      }).select("_id fullName userName email age role");
+
+      if (!users || users.length === 0) {
+        return res.status(200).json({
+          message: "No users found matching the query.",
+          data: { resultType: "users", data: [] },
+        });
+      }
+
+      const userIds = users.map((user) => user._id);
+
+      const chats = await Chat.find({
+        $or: userIds.map((user) => ({ members: { $all: [userA, user] } })),
+      });
+
+      if (chats && chats.length > 0) {
+        return res.status(200).json({
+          message: "Chats retrieved successfully",
+          data: { resultType: "chats", data: chats },
+        });
+      }
+
+      return res.status(200).json({
+        message: "Users retrieved successfully",
+        data: { resultType: "users", data: users },
+      });
+    } catch (error) {
+      console.error("Search error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
   } catch (err) {
-    console.error("getAllChats error:", err);
-    return res.status(500).json({ error: "Failed to fetch chats" });
+    console.error("search chats error:", err);
+    return res.status(500).json({ error: "Failed to fetch" });
   }
 };
 

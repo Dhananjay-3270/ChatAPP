@@ -12,7 +12,7 @@ const search = async (req, res) => {
     const users = await User.find({
       userName: { $regex: query, $options: "i" },
       _id: { $ne: userA },
-    });
+    }).select("_id fullName userName email age role");
 
     if (!users || users.length === 0) {
       return res.status(200).json({
