@@ -6,11 +6,11 @@ import { Apiendpoints } from "./Endpoints";
 
 
 export class ChatService {
-    static getChats = async () => {
+    static getChats = async (search: string) => {
         const response = await NetworkManager.getInstance().appRequest(
             {
                 method: HttpMethod.GET,
-                url: Apiendpoints.getChats,
+                url: Apiendpoints.getChats(search),
             })
         return await response.data
     }

@@ -2,14 +2,23 @@ import type React from "react";
 import { EllipsisVertical, Search } from "lucide-react";
 import { InputSearch } from "../InputSearch/InputSearch";
 import ChatListItem from "./ChatListItem";
-import type { ChatListProps, ChatItem } from "../../types/chat";
+import type { ChatListProps, SearchResult } from "../../types/chat";
 import { useChatFetch } from "../../hooks/useChatFetch";
+import { useState } from "react";
 
 const ChatList: React.FC<ChatListProps> = (props) => {
+  const [search, setSearch] = useState("");
+
   const { selectedChat, setSelectedChat } = props;
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
-  const { data: chats } = useChatFetch<ChatItem[] | null>("chats");
-
+  const { data: result } = useChatFetch<SearchResult | null>(
+    ["chats", `${search}`],
+    search,
+  );
+  console.log(result);
   return (
     <div className="flex flex-col h-full bg-white dark:bg-gray-900">
       <div className="flex-shrink-0 flex flex-row p-3.5 justify-around text-gray-900 dark:text-gray-100">
@@ -25,20 +34,31 @@ const ChatList: React.FC<ChatListProps> = (props) => {
           size="md"
           placeholder="Search people & Chats"
           rightIcon={<Search />}
+          onChange={handleSearch}
         />
       </div>
       <div className="flex-1 flex flex-col overflow-y-auto">
-        {chats &&
-          chats?.map((chat, index) => {
+        {result &&
+          result?.data.map((data, index) => {
             return (
               <ChatListItem
                 key={index}
-                chat={chat}
-                isSelected={selectedChat?._id === chat._id}
-                onClick={(chat) => setSelectedChat(chat)}
+                data={data}
+                type={result.resultType}
+                isSelected={
+                  result.resultType === "chats"
+                    ? selectedChat?._id === data._id
+                    : false
+                }
+                onClick={
+                  result.resultType === "chats"
+                    ? (data) => setSelectedChat(data)
+                    : () => console.log("first")
+                }
               />
             );
           })}
+        {}
       </div>
     </div>
   );

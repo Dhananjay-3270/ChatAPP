@@ -13,6 +13,7 @@ const ChatHome: React.FC = () => {
         <ChatList
           selectedChat={selectedChat}
           setSelectedChat={setSelectedChat}
+          
         />
       </div>
       <div className="flex-1 h-full flex flex-col">
