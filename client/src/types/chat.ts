@@ -42,6 +42,18 @@ export interface Chat {
 // Legacy alias for ChatItem (for backward compatibility)
 export type ChatItem = Chat;
 
+export interface SearchResultChats {
+    resultType: "chats";
+    data: Chat[];
+}
+
+export interface SearchResultUsers {
+    resultType: "users";
+    data: User[];
+}
+
+export type SearchResult = SearchResultChats | SearchResultUsers;
+
 // Component prop interfaces
 export interface ChatListProps {
     selectedChat: Chat | null;
@@ -49,10 +61,12 @@ export interface ChatListProps {
 }
 
 export interface ChatListItemProps {
-    chat: Chat;
-    isSelected: boolean;
-    onClick: React.Dispatch<React.SetStateAction<Chat | null>>;
+    data?: Chat | User;
+    isSelected?: boolean;
+    type: string;
+     onClick: (data: any) => void;
 }
+
 
 export interface ChatBoxProps {
     selectedChat?: Chat | null;
@@ -97,4 +111,13 @@ export interface AdaptedMessage {
     timestamp: string;
     direction: string;
     chatId: string;
+}
+
+export interface User {
+    _id: string;
+    fullName: string;
+    userName: string;
+    email: string;
+    age: number;
+    role: string;
 }
