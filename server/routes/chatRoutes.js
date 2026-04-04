@@ -6,7 +6,7 @@ const {
   getMessages,
   getAllChats,
 } = require("../controllers/chat.controller");
-router.get("/access", verifyAuth, getChatAcess);
+router.post("/access", verifyAuth, getChatAcess);
 router.get("/chats", verifyAuth, getAllChats);
 router.get("/:chatId", verifyAuth, getMessages);
 
