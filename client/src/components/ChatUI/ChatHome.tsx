@@ -1,24 +1,31 @@
 import { useState } from "react";
 import type React from "react";
-import type { Chat } from "../../types/chat";
+import type { Chat, Message } from "../../types/chat";
 import ChatList from "./ChatList";
 import ChatBox from "./ChatBox";
 import NoChatSelected from "../NoChatSelected";
 const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
-
+  const [messages, setMessages] = useState<Message[] | null>(null);
+  const handleChatSelect = (chat: Chat | null) => {
+    setMessages([]);
+    setSelectedChat(chat);
+  };
   return (
     <div className="flex h-full bg-white dark:bg-gray-900">
       <div className="w-1/4 border-r border-gray-200 dark:border-gray-700 h-full">
         <ChatList
           selectedChat={selectedChat}
-          setSelectedChat={setSelectedChat}
-          
+          setSelectedChat={handleChatSelect}
         />
       </div>
       <div className="flex-1 h-full flex flex-col">
         {selectedChat ? (
-          <ChatBox selectedChat={selectedChat} />
+          <ChatBox
+            selectedChat={selectedChat}
+            messages={messages}
+            setMessages={setMessages}
+          />
         ) : (
           <NoChatSelected />
         )}

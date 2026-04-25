@@ -1,5 +1,6 @@
 import type React from "react";
 
+
 // Base user interface for chat members
 export interface ChatUser {
     _id: string;
@@ -57,19 +58,21 @@ export type SearchResult = SearchResultChats | SearchResultUsers;
 // Component prop interfaces
 export interface ChatListProps {
     selectedChat: Chat | null;
-    setSelectedChat: React.Dispatch<React.SetStateAction<Chat | null>>;
+    setSelectedChat: (chat: Chat) => void;
 }
 
 export interface ChatListItemProps {
     data?: Chat | User;
     isSelected?: boolean;
     type: string;
-     onClick: (data: any) => void;
+    onClick: (data: any) => void;
 }
 
 
 export interface ChatBoxProps {
     selectedChat?: Chat | null;
+    messages: Message[] | null;
+    setMessages: React.Dispatch<React.SetStateAction<Message[] | null>>;
 }
 
 // Utility interfaces for chat utils functions
