@@ -29,7 +29,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
           >
             <ProfileAvatar
               name={
-                isChat(data)
+                data && isChat(data)
                   ? getChatDisplayName(user?.userName || "", data.members)
                   : ""
               }
@@ -37,13 +37,16 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
             />
             <div className="flex-1 flex-col">
               <p className="font-medium truncate text-gray-900 dark:text-gray-100">
-                {getChatDisplayName(user?.userName || "", data?.members)}
+                {getChatDisplayName(
+                  user?.userName || "",
+                  data && isChat(data) ? data.members : [],
+                )}
               </p>
               <div className="flex justify-between items-end">
                 <p className="text-sm text-gray-500 dark:text-gray-400 truncate leading-tight flex-1">
-                  {data?.latestMessage?.content}
+                  {data && isChat(data) && data?.latestMessage?.content}
                 </p>
-                {data?.latestMessage && (
+                {data && isChat(data) && data?.latestMessage && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 ml-2">
                     {new Date(data.latestMessage.createdAt).toLocaleTimeString(
                       [],
@@ -74,22 +77,6 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
               <p className="font-medium truncate text-gray-900 dark:text-gray-100">
                 {data?.userName || ""}
               </p>
-              {/* <div className="flex justify-between items-end">
-              <p className="text-sm text-gray-500 dark:text-gray-400 truncate leading-tight flex-1">
-                {data?.latestMessage?.content}
-              </p>
-              {data?.latestMessage && (
-                <div className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                  {new Date(data.latestMessage.createdAt).toLocaleTimeString(
-                    [],
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    },
-                  )}
-                </div>
-              )}
-            </div> */}
             </div>
           </div>
         );
