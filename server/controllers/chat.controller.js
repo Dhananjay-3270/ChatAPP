@@ -102,7 +102,14 @@ const getAllChats = async (req, res) => {
 
       const chats = await Chat.find({
         $or: userIds.map((user) => ({ members: { $all: [userA, user] } })),
-      });
+      })
+        .populate("members", "fullName userName ")
+        .populate({
+          path: "latestMessage",
+          populate: { path: "sender", select: "fullName userName avatar" },
+        })
+        .sort({ updatedAt: -1 })
+        .lean();
 
       if (chats && chats.length > 0) {
         return res.status(200).json({
