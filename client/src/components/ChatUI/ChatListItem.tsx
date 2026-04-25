@@ -15,6 +15,10 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
   const isChat = (item: Chat | User): item is Chat => {
     return (item as Chat).members !== undefined;
   };
+
+  const isUser = (item: Chat | User): item is User => {
+    return (item as User).userName !== undefined;
+  };
   const renderUI = (view: string) => {
     switch (view) {
       case "chats":
@@ -75,7 +79,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
             <ProfileAvatar name={user?.userName || ""} size="sm" />
             <div className="flex-1 flex-col">
               <p className="font-medium truncate text-gray-900 dark:text-gray-100">
-                {data?.userName || ""}
+                {data && isUser(data) ? data.userName : ""}
               </p>
             </div>
           </div>

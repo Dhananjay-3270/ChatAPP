@@ -2,7 +2,7 @@ import type React from "react";
 import { EllipsisVertical, Search } from "lucide-react";
 import { InputSearch } from "../InputSearch/InputSearch";
 import ChatListItem from "./ChatListItem";
-import type { ChatListProps, SearchResult } from "../../types/chat";
+import type { ChatListProps, SearchResult, Chat } from "../../types/chat";
 import { useChatFetch } from "../../hooks/useChatFetch";
 import { useState } from "react";
 import { ChatService } from "../../services/ChatService";
@@ -15,10 +15,10 @@ const ChatList: React.FC<ChatListProps> = (props) => {
     setSearch(event.target.value);
   };
 
-  const getChatAcess = async (data) => {
+  const getChatAcess = async (data: { email: string }) => {
     const userEmail = data.email;
     const response = await ChatService.createChat(userEmail);
-    const chat = response.data;
+    const chat = response.data as Chat;
     setSelectedChat(chat);
   };
 
