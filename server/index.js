@@ -17,7 +17,7 @@ connectDB(); // Connect to MongoDB
 const socketServer = http.createServer(server);
 const io = new Server(socketServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.ALLOWED_ORIGINS || "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST"],
   },
