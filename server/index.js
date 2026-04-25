@@ -22,7 +22,7 @@ const io = new Server(socketServer, {
   cors: {
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
-      if (origins.include(origin)) return callback(null, true);
+      if (origins.includes(origin)) return callback(null, true);
       return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
@@ -34,7 +34,7 @@ const port = process.env.PORT || 3000;
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    if (origins.include(origin)) return callback(null, true);
+    if (origins.includes(origin)) return callback(null, true);
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true, // if you use cookies or authentication
