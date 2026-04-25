@@ -15,9 +15,14 @@ const { Server } = require("socket.io"); // ⭐ NEW
 const { socketHandler } = require("./socket/socketHandler");
 connectDB(); // Connect to MongoDB
 const socketServer = http.createServer(server);
+const origins = ALLOWED_ORIGINS.split(",").map((origin) => origin.trim());
 const io = new Server(socketServer, {
   cors: {
-    origin: process.env.ALLOWED_ORIGINS || "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (origins.include(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST"],
   },
