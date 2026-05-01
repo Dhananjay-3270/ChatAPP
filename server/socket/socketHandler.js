@@ -148,6 +148,10 @@ function socketHandler(io) {
           return;
         }
 
+        console.log(
+          `message:send debug | userId=${userId} | chatId=${chatId} | content=${inputMessage}`,
+        );
+
         const message = await Message.create({
           sender: userId,
           content: inputMessage,

@@ -13,7 +13,7 @@ import { MessageInput } from "../MessageInput/MessageInput";
 // import { useGetMessages } from "../../hooks/useGetMessages";
 import { SingleMessageAdapter } from "../../utils/chatUtils";
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
-  const { selectedChat ,messages, setMessages } = props;
+  const { selectedChat, messages, setMessages } = props;
 
   const { user } = useUser();
   //   const { data: messages } = useGetMessages("selectedChat", selectedChat?._id, {
@@ -29,20 +29,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       chatId: selectedChat._id,
       inputMessage,
     });
-
-    // const response = await ChatService.sendMessage(
-    //   inputMessage,
-    //   selectedChat._id,
-    // );
-    // if (response.status === StatusCode.OK) {
-    //   const message = SingleMessageAdapter(
-    //     response?.data as Message,
-    //     user?.email || "",
-    //   );
-    //   setInputMessage("");
-    //   setUIMessages((prev) => [...prev, message]);
-    // }
-    /// Removed the REST API call method
   };
 
   const handleInputMessageChange = (
@@ -92,7 +78,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       setUIMessages((prev) => [...prev, message]);
     };
     socket.on("message:new", handleNewMessage);
-  }, [socket, selectedChat?._id]);
+  }, []);
 
   return (
     <div className="flex flex-col h-full">
