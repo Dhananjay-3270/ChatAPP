@@ -6,7 +6,7 @@ import type { ChatListProps, SearchResult, Chat } from "../../types/chat";
 import { useChatFetch } from "../../hooks/useChatFetch";
 import { useState } from "react";
 import { ChatService } from "../../services/ChatService";
-
+import { SearchListSkeleton } from "../Loader/SearchListSkeleton";
 const ChatList: React.FC<ChatListProps> = (props) => {
   const [search, setSearch] = useState("");
 
@@ -22,7 +22,7 @@ const ChatList: React.FC<ChatListProps> = (props) => {
     setSelectedChat(chat);
   };
 
-  const { data: result } = useChatFetch<SearchResult | null>(
+  const { data: result, isLoading } = useChatFetch<SearchResult | null>(
     ["chats", `${search}`],
     search,
   );
@@ -46,7 +46,10 @@ const ChatList: React.FC<ChatListProps> = (props) => {
         />
       </div>
       <div className="flex-1 flex flex-col overflow-y-auto">
-        {result &&
+        {isLoading ? (
+          <SearchListSkeleton length={6} />
+        ) : (
+          result &&
           result?.data.map((data, index) => {
             return (
               <ChatListItem
@@ -65,8 +68,8 @@ const ChatList: React.FC<ChatListProps> = (props) => {
                 }
               />
             );
-          })}
-        {}
+          })
+        )}
       </div>
     </div>
   );
