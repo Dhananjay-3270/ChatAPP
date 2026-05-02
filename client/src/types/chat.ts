@@ -1,4 +1,4 @@
-import type React from "react";
+
 
 
 // Base user interface for chat members
@@ -72,7 +72,7 @@ export interface ChatListItemProps {
 export interface ChatBoxProps {
     selectedChat?: Chat | null;
     messages: Message[] | null;
-    setMessages: React.Dispatch<React.SetStateAction<Message[] | null>>;
+    // setMessages: React.Dispatch<React.SetStateAction<Message[] | null>>;
 }
 
 // Utility interfaces for chat utils functions

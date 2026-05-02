@@ -1,8 +1,6 @@
 import type React from "react";
 import type { ChatBoxProps } from "../../types/chat";
 import { useEffect, useState } from "react";
-import { ChatService } from "../../services/ChatService";
-import { StatusCode } from "../../../core/utils/enum";
 import type { Message, AdaptedMessage } from "../../types/chat";
 import ProfileAvatar from "../Profile";
 import { getChatDisplayName, messageAdapter } from "../../utils/chatUtils";
@@ -13,7 +11,7 @@ import { MessageInput } from "../MessageInput/MessageInput";
 // import { useGetMessages } from "../../hooks/useGetMessages";
 import { SingleMessageAdapter } from "../../utils/chatUtils";
 const ChatBox: React.FC<ChatBoxProps> = (props) => {
-  const { selectedChat, messages, setMessages } = props;
+  const { selectedChat, messages } = props;
 
   const { user } = useUser();
   //   const { data: messages } = useGetMessages("selectedChat", selectedChat?._id, {
@@ -51,15 +49,15 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       chatId: selectedChat?._id,
     });
 
-    const getAllMessages = async () => {
-      if (selectedChat) {
-        const response = await ChatService.getAllMessages(selectedChat?._id);
-        if (response.status === StatusCode.OK) {
-          setMessages(response.data as Message[]);
-        }
-      }
-    };
-    getAllMessages();
+    // const getAllMessages = async () => {
+    //   if (selectedChat) {
+    //     const response = await ChatService.getAllMessages(selectedChat?._id);
+    //     if (response.status === StatusCode.OK) {
+    //       setMessages(response.data as Message[]);
+    //     }
+    //   }
+    // };
+    // getAllMessages();
 
     return () => {
       socket.emit("chat:leave", {

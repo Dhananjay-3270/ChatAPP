@@ -4,11 +4,22 @@ import type { Chat, Message } from "../../types/chat";
 import ChatList from "./ChatList";
 import ChatBox from "./ChatBox";
 import NoChatSelected from "../NoChatSelected";
+import { MessageLoader } from "../Loader/MessageLoader";
+import { useGetMessages } from "../../hooks/useGetMessages";
+
 const ChatHome: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
-  const [messages, setMessages] = useState<Message[] | null>(null);
+
+  const { data: messages, isLoading } = useGetMessages(
+    ["selectedChat", selectedChat?._id ?? ""],
+    selectedChat?._id ?? "",
+    {
+      enabled: !!selectedChat,
+    },
+  ) as { data: Message[] | null; isLoading: boolean };
+
+  // tanStack Query
   const handleChatSelect = (chat: Chat | null) => {
-    setMessages([]);
     setSelectedChat(chat);
   };
   return (
@@ -20,12 +31,10 @@ const ChatHome: React.FC = () => {
         />
       </div>
       <div className="flex-1 h-full flex flex-col">
-        {selectedChat ? (
-          <ChatBox
-            selectedChat={selectedChat}
-            messages={messages}
-            setMessages={setMessages}
-          />
+        {isLoading ? (
+          <MessageLoader />
+        ) : selectedChat ? (
+          <ChatBox selectedChat={selectedChat} messages={messages} />
         ) : (
           <NoChatSelected />
         )}

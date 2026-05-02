@@ -14,14 +14,15 @@ export class ChatService {
             })
         return await response.data
     }
-    static getAllMessages = (chatId: string) => {
-        return NetworkManager.getInstance().appRequest(
+    static getAllMessages = async (chatId: string) => {
+        const response = await NetworkManager.getInstance().appRequest(
             {
                 method: HttpMethod.GET,
                 url: Apiendpoints.getAllMessages(chatId),
 
 
             })
+        return await response.data
     }
     static sendMessage = (message: string, chatId: string) => {
         return NetworkManager.getInstance().appRequest(
