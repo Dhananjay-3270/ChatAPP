@@ -23,7 +23,7 @@ const io = new Server(socketServer, {
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
       if (origins.includes(origin)) return callback(null, true);
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error("Not allowed by CORS via Socket"));
     },
     credentials: true,
     methods: ["GET", "POST"],
