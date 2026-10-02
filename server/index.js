@@ -42,6 +42,12 @@ const corsOptions = {
 server.use(express.json());
 server.use(cookieParser());
 server.use(cors(corsOptions));
+server.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "ChatAPP backend is running",
+  });
+});
 server.use("/api/user", userRoutes);
 server.use("/api/status", statusRoutes);
 server.use("/api/chat", chatRoutes);
